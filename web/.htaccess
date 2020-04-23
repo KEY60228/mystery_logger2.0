@@ -1,3 +1,7 @@
+# フロントコントローラの設定
+# 全てのリクエストをindex.phpにアクセスするよう設定する
+# URLの書き換えを行う
+
 <IfModule mod_rewrite.c>
   RewriteEngine ON
   RewriteCond %{REQUEST_FILENAME}

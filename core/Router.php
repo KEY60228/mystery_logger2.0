@@ -3,10 +3,16 @@
 class Router {
   protected $routes;
 
+  /**
+   * ルーティング定義配列を受け取り、Router->compileRoutesを呼び出すコンストラクタ
+   */
   public function __construct($definitions) {
     $this->routes = $this->compileRoutes($definitions);
   }
 
+  /**
+   * ルーティング定義配列を受け取り、動的パラメータしてを正規表現で扱える形式に変換し、返す
+   */
   public function compileRoutes($definitions) {
     $routes = array();
 
@@ -25,6 +31,12 @@ class Router {
     return $routes;
   }
 
+  /**
+   * PATH_INFOを受け取り、ルーティング定義配列とマッチングを行う
+   * マッチした場合はコントローラーとアクションが格納された$paramsと
+   * マッチしたルートが格納された$matchesをマージし、その配列を返す
+   * マッチしなかった場合はfalseを返す
+   */
   public function resolve($path_info) {
     if ('/' !== substr($path_info, 0, 1)) {
       $path_info = '/' . $path_info;

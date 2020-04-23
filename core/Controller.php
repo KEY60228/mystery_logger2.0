@@ -8,8 +8,14 @@ abstract class Controller {
   protected $response;
   protected $session;
   protected $db_manager;
+  /**
+   * ログインが必要なアクションを指定する
+   */
   protected $auth_actions = array();
 
+  /**
+   * Applicationインスタンスを受け取り、それぞれ格納するコンストラクタ
+   */
   public function __construct($application) {
     $this->controller_name = strtolower(substr(get_class($this), 0, -10));
     $this->application = $applicaton;
@@ -19,6 +25,12 @@ abstract class Controller {
     $this->db_manager = $applicaton->getDbManager();
   }
 
+  /**
+   * アクション名とルーティングでマッチした配列を受け取り、
+   * 該当するActionメソッドを呼び出した後、その内容を返す
+   * 該当するActionメソッドがない場合は404ページを表示させ、
+   * 該当するActionにログイン認証が必要かつ認証されていない場合は例外を返す
+   */
   public function run($action, $params = array()) {
     $this->action_name = $action;
     $action_method = $action . 'Action';
@@ -35,6 +47,10 @@ abstract class Controller {
     return $content;
   }
 
+  /**
+   * ビューファイルに渡す連想配列、テンプレート名、読み込むレイアウトファイル名を受け取り、
+   * Viewクラスのrenderメソッドを呼び出し、その結果を返す
+   */
   protected function render($variables = array(), $template = null, $layout = 'layout') {
     $defaults = array (
       'request' => $this->request,
@@ -52,10 +68,17 @@ abstract class Controller {
     return $view->render($path, $variables, $layout);
   }
 
+  /**
+   * 404ページに遷移させる
+   */
   protected function forward404() {
     throw new HttpNotFoundException('Forwarded 404 page from ' . $this->controller_name . '/' . $this->action_name);
   }
 
+  /**
+   * 任意のURLを受け取り、リダイレクトさせる
+   * その際、ResponseクラスのsetStatusCodeメソッドでHTTPのステータスコードを302に指定する
+   */
   protected function redirect($url) {
     if (!preg_match('#http?://$', $url)) {
       $protocol = $this->request->isSsl() ? 'https://' : 'http://';
@@ -67,6 +90,10 @@ abstract class Controller {
     $this->response->setHttpHeader('Location', $url);
   }
 
+  /**
+   * フォーム名を受け取り、CSRFトークンを返す
+   * 保有できるトークンは最大10個までで、それ以上になる場合は古いものから削除する
+   */
   protected function generateCsrfToken($form_name) {
     $key = 'csrf_tokens/' . $form_name;
     $tokens = $this->session->get($key, array());
@@ -83,6 +110,11 @@ abstract class Controller {
     return $token;
   }
 
+  /**
+   * フォーム名とCSRFトークンを受け取り、チェックを行う
+   * トークンがマッチすればトークンを削除した上でtrueを返す
+   * マッチしなかった場合はfalseを返す
+   */
   protected function checkCsrfToken($form_name, $token) {
     $key = 'csrf_tokens/' . $form_name;
     $tokens = $this->session->get($key,array());
@@ -96,6 +128,10 @@ abstract class Controller {
     return false;
   }
 
+  /**
+   * アクション名を受け取り、$auth_actionプロパティと称号を行い、
+   * ログインが必要なアクションであればtrueを返し、そうでなければfalseを返す
+   */
   protected function needsAuthentication($action) {
     if ($this->auth_actions === true || (is_array($this->auth_actions) && in_array($action, $this->auth_actions))) {
       return true;
