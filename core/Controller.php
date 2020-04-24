@@ -18,11 +18,11 @@ abstract class Controller {
    */
   public function __construct($application) {
     $this->controller_name = strtolower(substr(get_class($this), 0, -10));
-    $this->application = $applicaton;
-    $this->request = $applicaton->getRequest();
-    $this->response = $applicaton->getResponse();
-    $this->session = $applicaton->getSession();
-    $this->db_manager = $applicaton->getDbManager();
+    $this->application = $application;
+    $this->request = $application->getRequest();
+    $this->response = $application->getResponse();
+    $this->session = $application->getSession();
+    $this->db_manager = $application->getDbManager();
   }
 
   /**
@@ -35,7 +35,7 @@ abstract class Controller {
     $this->action_name = $action;
     $action_method = $action . 'Action';
 
-    if (!method_exists($this, $aciton_method)) {
+    if (!method_exists($this, $action_method)) {
       $this->forward404();
     }
 
@@ -54,7 +54,7 @@ abstract class Controller {
   protected function render($variables = array(), $template = null, $layout = 'layout') {
     $defaults = array (
       'request' => $this->request,
-      'bese_url' => $this->request->getBaseUrl(),
+      'base_url' => $this->request->getBaseUrl(),
       'session' => $this->session,
     );
 
@@ -80,7 +80,7 @@ abstract class Controller {
    * その際、ResponseクラスのsetStatusCodeメソッドでHTTPのステータスコードを302に指定する
    */
   protected function redirect($url) {
-    if (!preg_match('#http?://$', $url)) {
+    if (!preg_match('#https?://#', $url)) {
       $protocol = $this->request->isSsl() ? 'https://' : 'http://';
       $host = $this->request->getHost();
       $base_url = $this->request->getBaseUrl();

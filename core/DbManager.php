@@ -67,7 +67,7 @@ class DbManager {
       $repository_class = $repository_name . 'Repository';
       $con = $this->getConnectionForRepository($repository_name);
       $repository = new $repository_class($con);
-      $this->reposiotories[$repository_name] = $repository;
+      $this->repositories[$repository_name] = $repository;
     }
     return $this->repositories[$repository_name];
   }

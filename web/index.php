@@ -1,9 +1,11 @@
 <?php
 
 /**
- * 全てのリクエストはこのファイルにアクセスする
+ * 全てのリクエストはこのファイルにアクセスする(フロントコントローラー)
  */
 
 require '../bootstrap.php';
+require '../MysteryLogger2Application.php';
 
-echo "gotcha!!";
+$app = new MysteryLogger2Application(false);
+$app->run();
