@@ -42,7 +42,7 @@ abstract class Application {
     $this->request = new Request();
     $this->response = new Response();
     $this->session = new Session();
-    $this->db_manager = new DbMnagaer();
+    $this->db_manager = new DbManager();
     $this->router = new Router($this->registerRoutes());
   }
 
@@ -61,7 +61,7 @@ abstract class Application {
   /**
    * ルーティング定義配列を取得する
    */
-  abstract public function registerRoutes();
+  abstract protected function registerRoutes();
 
   /**
    * デバッグモードか否かを確認する
