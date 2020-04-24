@@ -14,7 +14,8 @@ class MysteryLogger2Application extends Application {
    * ルーティング定義配列を返す
    */
   protected function registerRoutes() {
-    // とりあえず動的アクションは保留
+    // とりあえずpostsの動的アクションは保留
+    // usersの動的アクションも見直し必要
     return array(
       '/' => array('controller' => 'home', 'action' => 'top'),
       '/about' => array('controller' => 'home', 'action' => 'about'),
