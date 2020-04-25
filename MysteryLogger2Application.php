@@ -1,7 +1,7 @@
 <?php
 
 class MysteryLogger2Application extends Application {
-  protected $login_action = array('');
+  protected $login_action = array('users', 'signin');
 
   /**
    * ルートディレクトリ(このファイルが置いてあるディレクトリ)を返す
@@ -14,15 +14,19 @@ class MysteryLogger2Application extends Application {
    * ルーティング定義配列を返す
    */
   protected function registerRoutes() {
-    // とりあえずpostsの動的アクションは保留
-    // usersの動的アクションも見直し必要
+    // とりあえず動的アクションは保留
     return array(
       '/' => array('controller' => 'home', 'action' => 'top'),
       '/about' => array('controller' => 'home', 'action' => 'about'),
       '/posts/new' => array('controller' => 'posts', 'action' => 'new'),
       '/posts/create' => array('controller' => 'posts', 'action' => 'create'),
-      '/users' => array('controller' => 'users', 'action' =>'index'),
-      '/users/:action' => array('controller' => 'users'),
+      '/posts/:id' => array('controller' => 'posts', 'action' => 'show'),
+      '/users/signup' => array('controller' => 'users', 'action' => 'signup'),
+      '/users/register' => array('controller' => 'users', 'action' => 'register'),
+      '/users/signin' => array('controller' => 'users', 'action' => 'signin'),
+      '/users/authenticate' => array('controller' => 'users', 'action' => 'authenticate'),
+      '/users/signout' => array('controller' => 'users', 'action' => 'signout'),
+      '/users/:id' => array('controller' => 'users', 'action' => 'show'),
     );
   }
 

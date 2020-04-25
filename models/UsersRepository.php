@@ -27,12 +27,27 @@ class UsersRepository extends DbRepository {
   }
 
   /**
-   * クライアントが入力したユーザー名を受け取り、
-   * DBにSELECT分を実行、結果を返す
+   * クライアントが入力したユーザー名を受け取り、DBにSELECT文を実行、結果を返す
    */
   public function fetchByUserName($user_name) {
     $sql = "SELECT * FROM users WHERE name = :user_name";
     return $this->fetch($sql, array(':user_name' => $user_name));
+  }
+  
+  /**
+   * URLの動的パラメータ:idを受け取り、DBにSELECT文を実行、結果を返す
+   */
+  public function fetchByUserId($id) {
+    $sql = "SELECT * FROM users WHERE id = :id";
+    return $this->fetch($sql, array(':id' => $id));
+  }
+
+  /**
+   * クライアントが入力したメールアドレスを受け取り、DBにSELECT文を実行、結果を返す
+   */
+  public function fetchByEmail($email) {
+    $sql = "SELECT * FROM users WHERE email = :email";
+    return $this->fetch($sql, array(':email' => $email));
   }
 
   /**
@@ -66,4 +81,5 @@ class UsersRepository extends DbRepository {
 
     return false;
   }
+
 }

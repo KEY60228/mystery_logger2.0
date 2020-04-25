@@ -6,9 +6,6 @@ abstract class Application {
   protected $response;
   protected $session;
   protected $db_manager;
-  /**
-   * ログインが必要なアクションを指定する
-   */
   protected $login_action = array();
 
   /**

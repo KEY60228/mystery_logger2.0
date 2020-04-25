@@ -1,6 +1,9 @@
 <?php
 
 class UsersController extends Controller {
+  // ログインが必要なアクションを指定する
+  protected $auth_actions = array('show', 'signout');
+  
   /**
    * CSRFトークンを発行し、ビューファイルに渡したものをレンダリングする
    */
@@ -75,5 +78,111 @@ class UsersController extends Controller {
       'errors' => $errors,
       '_token' => $this->generateCsrfToken('users/signup'),
     ), 'signup');
+  }
+
+  /**
+   * ルーティングマッチ配列を受け取り、ユーザーIDでユーザーの存在を確認した後、
+   * postsテーブルから投稿情報とユーザー情報を抽出し、ページを表示する
+   * ユーザーが存在しなかった場合は404ページに遷移させる
+   */
+  public function showAction($params) {
+    $user = $this->db_manager->get('Users')->fetchByUserId($params['id']);
+
+    if (!$user) {
+      $this->forward404();
+    }
+
+    $posts = $this->db_manager->get('Posts')->fetchAllByUserId($user['id']);
+
+    return $this->render(array(
+      'user' => $user,
+      'posts' => $posts,
+    ));
+  }
+
+  /**
+   * ログインページを表示させる
+   * 既にログイン済みの場合はリダイレクトさせる
+   */
+  public function signinAction() {
+    if ($this->session->isAuthenticated()) {
+      // redirect先はとりあえずトップページで
+      return $this->redirect('/');
+    }
+
+    return $this->render(array(
+      'user_name' => '',
+      'email' => '',
+      'password' => '',
+      '_token' => $this->generateCsrfToken('users/signin'),
+    ));
+  }
+
+  /**
+   * ログイン認証アクション
+   * 既にログイン済の場合はリダイレクトさせ、HTTPメソッドがPOST以外の場合は404ページに遷移させる
+   * トークンの照合が正しくない場合もリダイレクトさせる
+   * メールアドレスもパスワードも正しければ、ログイン状態にした上でユーザーぺーじに遷移させる
+   * それ以外の場合は入力値を渡して再度ログインページを表示させる (リダイレクトではない)
+   */
+  public function authenticateAction() {
+    if ($this->session->isAuthenticated()) {
+      // redirect先はとりあえずトップページで
+      return $this->redirect('/');
+    }
+
+    if (!$this->request->isPost()) {
+      $this->forward404();
+    }
+
+    $token = $this->request->getPost('_token');
+    if (!$this->checkCsrftoken('users/signin', $token)) {
+      return $this->redirect('/users/signin');
+    }
+
+    $email = $this->request->getPost('email');
+    $password = $this->request->getPost('password');
+
+    $errors = array();
+
+    if (!strlen($email)) {
+      $errors[] = 'メールアドレスを入力してください';
+    }
+
+    if (!strlen($password)) {
+      $errors[] = 'パスワードを入力してください';
+    }
+
+    if (count($errors) === 0) {
+      $users_repository = $this->db_manager->get('Users');
+      $user = $users_repository->fetchByEmail($email);
+
+      if (!$user || ($user['password'] !== $users_repository->hashPassword($password))) {
+        $errors[] = 'メールアドレスかパスワードが不正です';
+      } else {
+        $this->session->setAuthenticated(true);
+        $this->session->set('user', $user);
+
+        return $this->redirect('/users/' . $user['id']);
+      }
+    }
+
+    return $this->render(array(
+      'email' => $email,
+      'password' => $password,
+      'errors' => $errors,
+      '_token' => $this->generateCsrfToken('users/signin'),
+    ), 'signin');
+  }
+
+  /**
+   * セッションをクリアするログアウトアクション
+   * ログインページへリダイレクトする
+   */
+  public function signoutAction() {
+    $this->session->clear();
+    $this->session->setAuthenticated(false);
+
+    return $this->redirect('/users/signin');
   }
 }

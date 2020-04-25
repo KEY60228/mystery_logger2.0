@@ -8,9 +8,7 @@ abstract class Controller {
   protected $response;
   protected $session;
   protected $db_manager;
-  /**
-   * ログインが必要なアクションを指定する
-   */
+  // ログインが必要なアクションを指定する
   protected $auth_actions = array();
 
   /**
@@ -129,7 +127,7 @@ abstract class Controller {
   }
 
   /**
-   * アクション名を受け取り、$auth_actionプロパティと称号を行い、
+   * アクション名を受け取り、$auth_actionプロパティと照合を行い、
    * ログインが必要なアクションであればtrueを返し、そうでなければfalseを返す
    */
   protected function needsAuthentication($action) {
