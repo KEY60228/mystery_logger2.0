@@ -13,7 +13,21 @@ class FollowingsRepository extends DbRepository {
   }
 
   /**
-   * 
+   * user_idとfollowing_idを受け取り、DBにセレクト文を実行、
+   * 一致するuser_idとfollowing_idが0でなければtrue、それ以外ならばfalseを返す
+   * (MySQLなら文字列で、pgsqlなら整数型で返ってくるようなので型を含めない比較にした)
    */
-  public function isFollowing($user)
+  public function isFollowing($user_id, $following_id) {
+    $sql = "SELECT COUNT(user_id) as count FROM followings WHERE user_id = :user_id AND following_id = :following_id";
+    $row = $this->fetch($sql, array(
+      ':user_id' => $user_id,
+      ':following_id' => $following_id
+    ));
+
+    if ($row['count'] != 0) {
+      return true;
+    }
+
+    return false;
+  }
 }

@@ -68,7 +68,7 @@ class UsersController extends Controller {
       $this->session->setAuthenticated(true);
       $user = $this->db_manager->get('Users')->fetchByUserName($user_name);
       $this->session->set('user', $user);
-      return $this->redirect('/');
+      return $this->redirect('/users/' . $user['id']);
     }
 
     return $this->render(array(
@@ -94,9 +94,19 @@ class UsersController extends Controller {
 
     $posts = $this->db_manager->get('Posts')->fetchAllByUserId($user['id']);
 
+    $following = null;
+    if ($this->session->isAuthenticated()) {
+      $my = $this->session->get('user');
+      if ($my['id'] !== $user['id']) {
+        $following =$this->db_manager->get('Followings')->isFollowing($my['id'], $user['id']);
+      }
+    }
+
     return $this->render(array(
       'user' => $user,
       'posts' => $posts,
+      'following' => $following,
+      '_token' => $this->generateCsrfToken('users/follow'),
     ));
   }
 
@@ -184,5 +194,38 @@ class UsersController extends Controller {
     $this->session->setAuthenticated(false);
 
     return $this->redirect('/users/signin');
+  }
+
+  /**
+   * 
+   */
+  public function followAction() {
+    if (!$this->request->isPost()) {
+      $this->forward404();
+    }
+
+    $following_name = $this->request->getPost('following_name');
+    if (!$following_name) {
+      $this->forward404();
+    }
+
+    $token = $this->request->getPost('_token');
+    if (!$this->checkCsrfToken('users/follow', $token)) {
+      return $this->redirect('/users/' . $following_name);
+    }
+
+    $follow_user = $this->db_manager->get('Users')->fetchByUserName($following_name);
+    if (!$follow_user) {
+      $this->forward404();
+    }
+
+    $user = $this->session->get('user');
+    
+    $followings_repository = $this->db_manager->get('Followings');
+    if ($user['id'] !== $following_user['id'] && !$followings_repository->isFollowing($user['id'], $follow_user['id'])) {
+      $followings_repository->insert($user['id'], $follow_user['id']);
+    }
+
+    return $this->redirect('/users/' . $follow_user['id']);
   }
 }
