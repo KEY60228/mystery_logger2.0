@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title><?php if (isset($title)) {echo $this->escape($title) . ' - ';} ?>Mystery Logger2</title>
+  <title><?php if (isset($title)) {echo $this->escape($title) . ' - ';} ?>なぞログ</title>
 </head>
 <body>
   <header>
@@ -16,6 +16,9 @@
     </h1>
     <ul class="header-menus">
       <?php if ($session->isAuthenticated()) : ?>
+        <li>
+          <a href="<?php echo $base_url; ?>/users/<?php echo $user['id'] ?>"><?php echo $user['name'] ?></a>
+        </li>
         <li>
           <a href="<?php echo $base_url; ?>/performances">公演一覧</a>
         </li>

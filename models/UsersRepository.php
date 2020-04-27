@@ -82,8 +82,22 @@ class UsersRepository extends DbRepository {
     return false;
   }
 
+  /**
+   * ユーザーIDを受け取ってフォローしているユーザーの情報を受け取る
+   */
   public function fetchAllFollowingsByUserId($user_id) {
     $sql = "SELECT users.* FROM users LEFT JOIN followings ON followings.following_id = users.id WHERE followings.user_id = :user_id";
     return $this->fetchAll($sql, array(':user_id' => $user_id));
+  }
+
+  public function update($user_id, $user_name, $email) {
+    $now = new DateTime();
+    $sql = "UPDATE users SET name = :user_name, email = :email, updated_at = :updated_at WHERE id = :user_id";
+    $stmt = $this->execute($sql, array(
+      ':user_name' => $user_name,
+      ':email' => $email,
+      ':updated_at' => $now->format('Y-m-d H:i:s'),
+      ':user_id' => $user_id,
+    ));
   }
 }

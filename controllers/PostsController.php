@@ -70,4 +70,60 @@ class PostsController extends Controller {
     return $this->render(array('post' => $post));
   }
   
+  /**
+   * URLから動的パラメータを受け取り、投稿の編集ページを表示させる
+   */
+  public function editAction($params) {
+    $post = $this->db_manager->get('Posts')->fetchById($params['id']);
+
+    if (!$post) {
+      $this->forward404();
+    }
+
+    return $this->render(array(
+      'post' => $post,
+      '_token' => $this->generateCsrfToken('posts/edit'),
+    ));
+  }
+
+  /**
+   * URLから動的パラメータを受け取る
+   * HTTPメソッドがPOSTでなければ404に遷移させ、トークンが不正ならリダイレクトさせる
+   * 投稿チェックを行い、エラーがなければupdate文を実行し、投稿詳細ページにリダイレクトさせる
+   * エラーがある場合は編集ページを再度表示させる (リダイレクトではない)
+   */
+  public function updateAction($params) {
+    if (!$this->request->isPost()) {
+      $this->forward404();
+    }
+
+    $post = $this->db_manager->get('Posts')->fetchById($params['id']);
+
+    $token = $this->request->getPost('_token');
+    if(!$this->checkCsrfToken('posts/edit', $token)) {
+      return $this->redirect('/posts/' . $post['id'] . '/edit');
+    }
+
+    $post['contents'] = $this->request->getPost('contents');
+
+    $errors = array();
+
+    if (!strlen($post['contents'])) {
+      $errors[] = '感想を入力してください';
+    } elseif (mb_strlen($post['contents']) > 200) {
+      $errors[] = '感想は200字以内で入力してください';
+    }
+
+    if (count($errors) === 0) {
+      $user = $this->session->get('user');
+      $this->db_manager->get('Posts')->update($post['id'], $post['contents']);
+      return $this->redirect('/posts/' . $post['id']);
+    }
+
+    return $this->render(array(
+      'post' => $post,
+      'errors' => $errors,
+      '_token' => $this->generateCsrfToken('posts/edit'),
+    ), 'edit');
+  }
 }

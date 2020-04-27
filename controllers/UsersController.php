@@ -2,7 +2,7 @@
 
 class UsersController extends Controller {
   // ログインが必要なアクションを指定する
-  protected $auth_actions = array('show', 'signout');
+  protected $auth_actions = array('show', 'signout', 'follow', 'edit', 'update');
   
   /**
    * CSRFトークンを発行し、ビューファイルに渡したものをレンダリングする
@@ -95,10 +95,14 @@ class UsersController extends Controller {
     $posts = $this->db_manager->get('Posts')->fetchAllByUserId($user['id']);
 
     $following = null;
+    $editable = null;
+
     if ($this->session->isAuthenticated()) {
       $my = $this->session->get('user');
       if ($my['id'] !== $user['id']) {
-        $following =$this->db_manager->get('Followings')->isFollowing($my['id'], $user['id']);
+        $following = $this->db_manager->get('Followings')->isFollowing($my['id'], $user['id']);
+      } else {
+        $editable = true;
       }
     }
 
@@ -106,6 +110,7 @@ class UsersController extends Controller {
       'user' => $user,
       'posts' => $posts,
       'following' => $following,
+      'editable' => $editable,
       '_token' => $this->generateCsrfToken('users/follow'),
     ));
   }
@@ -116,12 +121,11 @@ class UsersController extends Controller {
    */
   public function signinAction() {
     if ($this->session->isAuthenticated()) {
-      // redirect先はとりあえずトップページで
-      return $this->redirect('/');
+      $user = $this->session->get('user');
+      return $this->redirect('/users/' . $user['id']);
     }
 
     return $this->render(array(
-      'user_name' => '',
       'email' => '',
       'password' => '',
       '_token' => $this->generateCsrfToken('users/signin'),
@@ -231,5 +235,72 @@ class UsersController extends Controller {
     }
 
     return $this->redirect('/users/' . $follow_user['id']);
+  }
+
+  /**
+   * 編集ページを表示させる
+   */
+  public function editAction() {
+    $user = $this->session->get('user');
+    return $this->render(array(
+      'user_name' => $user['name'],
+      'email' => $user['email'],
+      '_token' => $this->generateCsrfToken('users/edit'),
+    ));
+  }
+
+  /**
+   * ユーザー情報の更新を行うアクション
+   * HTTPメソッドがPostでない場合は404に遷移させ、CSRFトークンが不正な場合はリダイレクトさせる
+   * ユーザー名とメールアドレスのチェックを行い、エラーがなければDBにUPDATEを実行し、
+   * 該当のユーザー詳細ページにリダイレクトさせる
+   * エラーがある場合は再度editページを表示させる (リダイレクトではない)
+   */
+  public function updateAction() {
+    if (!$this->request->isPost()) {
+      $this->forward404();
+    }
+
+    $token = $this->request->getPost('_token');
+    if(!$this->checkCsrfToken('users/edit', $token)) {
+      return $this->redirect('/users/edit');
+    }
+
+    $my = $this->session->get('user');
+    $user_name = $this->request->getPost('user_name');
+    $email = $this->request->getPost('email');
+
+    $errors = array();
+
+    if (!strlen($user_name)) {
+      $errors[] = 'ユーザー名を入力してください';
+    } elseif (!preg_match('/^\w{3,20}$/', $user_name)) {
+      // とりあえずね
+      $errors[] = 'ユーザー名は半角英数ならびにアンダースコアで3〜20字で入力してください';
+    } elseif ($user_name !== $my['name'] && !$this->db_manager->get('Users')->isUniqueUserName($user_name)) {
+      $errors[] = 'ユーザー名は既に使用されています';
+    }
+    
+    if (!strlen($email)) {
+      $errors[] = 'メールアドレスを入力してください';
+    } elseif (!preg_match('/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/', $email)) {
+      $errors[] = 'メールアドレスを正しく入力してください';
+    } elseif ($email !== $my['email'] && !$this->db_manager->get('Users')->isUniqueMailAddress($email)) {
+      $errors[] = 'メールアドレスは既に使用されています';
+    }
+
+    if (count($errors) === 0) {
+      $this->db_manager->get('Users')->update($my['id'], $user_name, $email);
+      $user = $this->db_manager->get('Users')->fetchByUserName($user_name);
+      $this->session->set('user', $user);
+      return $this->redirect('/users/' . $user['id']);
+    }
+
+    return $this->render(array(
+      'user_name' => $user_name,
+      'email' => $email,
+      'errors' => $errors,
+      '_token' => $this->generateCsrfToken('users/edit'),
+    ), 'edit');
   }
 }

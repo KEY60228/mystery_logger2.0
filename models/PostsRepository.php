@@ -58,4 +58,18 @@ class PostsRepository extends DbRepository {
       ':performance_id' => $performance_id,
     ));
   }
+
+  /**
+   * 投稿IDと更新内容を受け取り、update文を実行する
+   */
+  public function update($id, $contents) {
+    $now = new DateTime();
+    $sql = "UPDATE posts SET contents = :contents, updated_at = :updated_at WHERE id = :id";
+
+    $stmt = $this->execute($sql, array(
+      ':contents' => $contents,
+      ':updated_at' => $now->format('Y-m-d H:i:s'),
+      ':id' => $id,
+    ));
+  }
 }
