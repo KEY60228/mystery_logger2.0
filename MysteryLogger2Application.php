@@ -28,6 +28,8 @@ class MysteryLogger2Application extends Application {
       '/users/signout' => array('controller' => 'users', 'action' => 'signout'),
       '/users/:id' => array('controller' => 'users', 'action' => 'show'),
       '/follow' => array('controller' => 'users', 'action' => 'follow'),
+      '/performances' => array('controller' => 'performances', 'action' => 'index'),
+      '/performances/:id' => array('controller' => 'performances', 'action' => 'show'),
     );
   }
 

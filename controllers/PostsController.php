@@ -69,4 +69,5 @@ class PostsController extends Controller {
 
     return $this->render(array('post' => $post));
   }
+  
 }

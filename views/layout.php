@@ -17,7 +17,7 @@
     <ul class="header-menus">
       <?php if ($session->isAuthenticated()) : ?>
         <li>
-          <a href="">公演一覧</a>
+          <a href="<?php echo $base_url; ?>/performances">公演一覧</a>
         </li>
         <li>
           <a href="<?php echo $base_url; ?>/posts/new">新規投稿</a>

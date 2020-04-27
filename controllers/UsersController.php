@@ -197,7 +197,11 @@ class UsersController extends Controller {
   }
 
   /**
-   * 
+   * フォローを行うアクション
+   * HTTPメソッドがPostでない、また、following_nameを受け取っていなかったら404に遷移
+   * CSRFトークンも照合し、不正な場合はリダイレクトさせる
+   * フォロー元のユーザーIDがフォロー先のユーザーIDと一致せず、既にフォローしていないユーザーだった場合、
+   * Followingsテーブルにinsert文を実行し、フォロー先ユーザーの詳細ページにリダイレクトする
    */
   public function followAction() {
     if (!$this->request->isPost()) {

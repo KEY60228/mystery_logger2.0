@@ -82,4 +82,8 @@ class UsersRepository extends DbRepository {
     return false;
   }
 
+  public function fetchAllFollowingsByUserId($user_id) {
+    $sql = "SELECT users.* FROM users LEFT JOIN followings ON followings.following_id = users.id WHERE followings.user_id = :user_id";
+    return $this->fetchAll($sql, array(':user_id' => $user_id));
+  }
 }
