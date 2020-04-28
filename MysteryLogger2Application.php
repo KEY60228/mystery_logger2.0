@@ -2,6 +2,7 @@
 
 class MysteryLogger2Application extends Application {
   protected $login_action = array('users', 'signin');
+  protected $deny_action = array('users', 'show');
 
   /**
    * ルートディレクトリ(このファイルが置いてあるディレクトリ)を返す
@@ -23,6 +24,7 @@ class MysteryLogger2Application extends Application {
       '/posts/:id' => array('controller' => 'posts', 'action' => 'show'),
       '/posts/:id/edit' => array('controller' => 'posts', 'action' => 'edit'),
       '/posts/:id/update' => array('controller' => 'posts', 'action' => 'update'),
+      '/posts/:id/destroy' => array('controller' => 'posts', 'action' => 'destroy'),
       '/users/signup' => array('controller' => 'users', 'action' => 'signup'),
       '/users/register' => array('controller' => 'users', 'action' => 'register'),
       '/users/signin' => array('controller' => 'users', 'action' => 'signin'),

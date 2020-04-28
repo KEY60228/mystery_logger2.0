@@ -3,6 +3,8 @@
 class PostsController extends Controller {
   // ログインが必要なアクションを指定する
   protected $auth_actions = array('new', 'create', 'show');
+  // 権限が必要なアクションを指定する
+  protected $right_actions = array('edit', 'update', 'destroy');
 
   /**
    * 新規投稿ページを返す
@@ -67,7 +69,12 @@ class PostsController extends Controller {
       $this->forward404();
     }
 
-    return $this->render(array('post' => $post));
+    $user = $this->session->get('user');
+
+    return $this->render(array(
+      'post' => $post,
+      'user' => $user,
+    ));
   }
   
   /**
@@ -125,5 +132,25 @@ class PostsController extends Controller {
       'errors' => $errors,
       '_token' => $this->generateCsrfToken('posts/edit'),
     ), 'edit');
+  }
+
+  /**
+   * URLから投稿情報を受け取り、該当のIDの投稿を削除するアクション
+   * 削除が完了したらユーザー詳細ページにリダイレクトする
+   */
+  public function destroyAction($params) {
+
+    // POST制限かけたいけどとりあえず
+
+    $post = $this->db_manager->get('Posts')->fetchById($params['id']);
+    $user = $this->session->get('user');
+
+    $token = $this->request->getPost('_token');
+    if(!$this->checkCsrfToken('posts/edit', $token)) {
+      return $this->redirect('/posts/' . $post['id'] . '/edit');
+    }
+
+    $this->db_manager->get('Posts')->delete($post['id']);
+    return $this->redirect('users/' . $user['id']);
   }
 }

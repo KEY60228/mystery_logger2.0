@@ -90,6 +90,9 @@ class UsersRepository extends DbRepository {
     return $this->fetchAll($sql, array(':user_id' => $user_id));
   }
 
+  /**
+   * ユーザーID、ユーザー名、メールアドレスを受け取り、DBにupdate文を実行する
+   */
   public function update($user_id, $user_name, $email) {
     $now = new DateTime();
     $sql = "UPDATE users SET name = :user_name, email = :email, updated_at = :updated_at WHERE id = :user_id";

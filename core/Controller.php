@@ -10,6 +10,8 @@ abstract class Controller {
   protected $db_manager;
   // ログインが必要なアクションを指定する
   protected $auth_actions = array();
+  // 追加分
+  protected $right_actions = array();
 
   /**
    * Applicationインスタンスを受け取り、それぞれ格納するコンストラクタ
@@ -40,6 +42,16 @@ abstract class Controller {
     if ($this->needsAuthentication($action) && !$this->session->isAuthenticated()) {
       throw new UnauthorizedActionException();
     }
+    
+    // 追加分 (もっといいやり方あるかもだけどとりあえず…)
+    if (array_key_exists('id', $params)) {
+      $viewing_user = $this->session->get('user');
+      $viewing_post = $this->db_manager->get('Posts')->fetchById($params['id']);
+      if ($this->needsRight($action) && $this->session->isAuthenticated() && $viewing_post['user_id'] !== $viewing_user['id']) {
+        throw new NoRightActionException();
+      }
+    }
+    // 追加分ここまで
 
     $content = $this->$action_method($params);
     return $content;
@@ -132,6 +144,13 @@ abstract class Controller {
    */
   protected function needsAuthentication($action) {
     if ($this->auth_actions === true || (is_array($this->auth_actions) && in_array($action, $this->auth_actions))) {
+      return true;
+    }
+    return false;
+  }
+
+  protected function needsRight($action) {
+    if ($this->right_actions === true || (is_array($this->right_actions) && in_array($action, $this->right_actions))) {
       return true;
     }
     return false;

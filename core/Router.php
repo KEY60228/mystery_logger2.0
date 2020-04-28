@@ -11,7 +11,7 @@ class Router {
   }
 
   /**
-   * ルーティング定義配列を受け取り、動的パラメータしてを正規表現で扱える形式に変換し、返す
+   * ルーティング定義配列を受け取り、動的パラメータを正規表現で扱える形式に変換し、返す
    */
   public function compileRoutes($definitions) {
     $routes = array();

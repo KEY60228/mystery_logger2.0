@@ -7,6 +7,8 @@ abstract class Application {
   protected $session;
   protected $db_manager;
   protected $login_action = array();
+  // 追加分
+  protected $deny_action = array();
 
   /**
    * デバッグを行うか否かの変数を受け取り、各メソッドに渡すコンストラクタ
@@ -144,6 +146,10 @@ abstract class Application {
     } catch (UnauthorizedActionException $e) {
       list($controller, $action) = $this->login_action;
       $this->runAction($controller, $action);
+    } catch (NoRightActionException $e) {
+      // 追加分
+      list($controller, $action) = $this->deny_action;
+      $this->runAction($controller, $action, $this->session->get('user'));
     }
 
     $this->response->send();
