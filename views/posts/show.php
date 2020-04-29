@@ -1,4 +1,4 @@
-<?php $this->setLayoutVar('title', $post['name']) ?>
+<?php $this->setLayoutVar('title', $post['user_name']) ?>
 
 <?php echo $this->render('posts/post', array('post' => $post)); ?>
 

@@ -9,6 +9,7 @@
     <?php echo $this->render('errors', array('errors' => $errors)); ?>
   <?php endif; ?>
 
+  <h3><?php echo $performance['name'] ?></h3>
   <textarea name="contents" rows="2" cols="60"><?php echo $this->escape($post['contents']); ?></textarea>
 
   <p>

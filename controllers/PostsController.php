@@ -11,7 +11,9 @@ class PostsController extends Controller {
    * 新規投稿ページには前回記入したcontentsとtokenを渡す
    */
   public function newAction() {
+    $performances = $this->db_manager->get('Performances')->fetchAllPerformances();
     return $this->render(array(
+      'performances' => $performances,
       'contents' => '',
       '_token' =>$this->generateCsrfToken('posts/new'),
     ));
@@ -25,6 +27,11 @@ class PostsController extends Controller {
    */
   public function createAction() {
     if (!$this->request->isPost()) {
+      $this->forward404();
+    }
+
+    $performance = $this->request->getPost('performance');
+    if (!$performance) {
       $this->forward404();
     }
 
@@ -45,7 +52,7 @@ class PostsController extends Controller {
 
     if (count($errors) === 0) {
       $user = $this->session->get('user');
-      $this->db_manager->get('Posts')->insert($user['id'], $contents);
+      $this->db_manager->get('Posts')->insert($user['id'], $contents, $performance['id']);
       return $this->redirect('/users/' . $user['id']);
     }
 
@@ -54,6 +61,7 @@ class PostsController extends Controller {
     return $this->render(array(
       'errors' => $errors,
       'contents' => $contents,
+      'performances' => $performance,
       '_token' => $this->generateCsrfToken('posts/new'),
     ), 'new');
   }
@@ -64,7 +72,7 @@ class PostsController extends Controller {
    */
   public function showAction($params) {
     $post = $this->db_manager->get('Posts')->fetchById($params['id']);
-
+    
     if (!$post) {
       $this->forward404();
     }
@@ -87,8 +95,14 @@ class PostsController extends Controller {
       $this->forward404();
     }
 
+    $performance = $this->db_manager->get('Performances')->fetchByPerformanceId($post['performance_id']);
+    if (!$performance) {
+      $this->forward404();
+    }
+
     return $this->render(array(
       'post' => $post,
+      'performance' => $performance,
       '_token' => $this->generateCsrfToken('posts/edit'),
     ));
   }

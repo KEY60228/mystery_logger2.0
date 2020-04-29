@@ -5,6 +5,12 @@
 <form action="<?php echo $base_url; ?>/posts/create" method="post">
   <input type="hidden" name="_token" value="<?php echo $this->escape($_token); ?>">
 
+  <select name="performance">
+    <?php foreach ($performances as $performance): ?>
+      <option value="<?php echo $performance['id'] ?>"><?php echo $performance['name']; ?></option>
+    <?php endforeach; ?>
+  </select>
+
   <?php if (isset($errors) && count($errors) > 0) : ?>
     <?php echo $this->render('errors', array('errors' => $errors)); ?>
   <?php endif; ?>
