@@ -19,6 +19,7 @@ class MysteryLogger2Application extends Application {
     return array(
       '/' => array('controller' => 'home', 'action' => 'top'),
       '/about' => array('controller' => 'home', 'action' => 'about'),
+      '/posts' => array('controller' => 'posts', 'action' => 'index'),
       '/posts/new' => array('controller' => 'posts', 'action' => 'new'),
       '/posts/create' => array('controller' => 'posts', 'action' => 'create'),
       '/posts/:id' => array('controller' => 'posts', 'action' => 'show'),

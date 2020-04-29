@@ -20,7 +20,7 @@ class PostsRepository extends DbRepository {
    * 該当のユーザーIDのユーザーの名前と投稿情報全てを抽出する (タイムライン用)
    */
   public function fetchAllPersonalArchivesByUserId($user_id) {
-    $sql = "SELECT posts.*, users.name FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN follwings ON followings.following_id = posts.user_id AND followings.user_id = :user_id WHERE followings.user_id = :user_id OR users.id = :user_id ORDER BY posts.created_at DESC";
+    $sql = "SELECT posts.*, users.name FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN followings ON followings.following_id = posts.user_id AND followings.user_id = :user_id WHERE followings.user_id = :user_id OR users.id = :user_id ORDER BY posts.created_at DESC";
 
     return $this->fetchAll($sql, array(':user_id' => $user_id));
   }

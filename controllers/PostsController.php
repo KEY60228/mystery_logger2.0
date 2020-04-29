@@ -157,4 +157,17 @@ class PostsController extends Controller {
     $this->db_manager->get('Posts')->delete($post['id']);
     return $this->redirect('/users/' . $user['id']);
   }
+
+  /**
+   * タイムラインを表示させる
+   * (自分の投稿とフォローしているユーザーの投稿全て表示)
+   */
+  public function indexAction() {
+    $user = $this->session->get('user');
+    $posts = $this->db_manager->get('Posts')->fetchAllPersonalArchivesByUserId($user['id']);
+
+    return $this->render(array(
+      'posts' => $posts,
+    ));
+  }
 }

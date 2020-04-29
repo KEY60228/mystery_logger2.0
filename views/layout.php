@@ -10,14 +10,14 @@
       <?php if (!$session->isAuthenticated()) : ?>
         <a href="<?php echo $base_url; ?>/">なぞログ</a>
       <?php else : ?>
-        <!-- もっと良いリンクの飛ばし方がある気がするけどとりあえずね… -->
-        <a href="<?php echo $base_url ;?>/users/<?php $user = $session->get('user'); echo $user['id']; ?>">なぞログ</a>
+        <a href="<?php echo $base_url ;?>/posts">なぞログ</a>
       <?php endif; ?>
     </h1>
     <ul class="header-menus">
       <?php if ($session->isAuthenticated()) : ?>
         <li>
-          <a href="<?php echo $base_url; ?>/users/<?php echo $user['id'] ?>"><?php echo $user['name'] ?></a>
+          <!-- もっと良い書き方あるだろうけどとりあえずね… -->
+          <a href="<?php echo $base_url; ?>/users/<?php $user = $session->get('user'); echo $user['id']; ?>"><?php echo $user['name'] ?></a>
         </li>
         <li>
           <a href="<?php echo $base_url; ?>/performances">公演一覧</a>
