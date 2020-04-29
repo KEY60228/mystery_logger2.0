@@ -2,7 +2,7 @@
 
 class UsersController extends Controller {
   // ログインが必要なアクションを指定する
-  protected $auth_actions = array('show', 'signout', 'follow', 'edit', 'update');
+  protected $auth_actions = array('show', 'signout', 'follow', 'edit', 'update', 'unfollow', 'followings', 'followers');
   
   /**
    * CSRFトークンを発行し、ビューファイルに渡したものをレンダリングする
@@ -106,11 +106,14 @@ class UsersController extends Controller {
       }
     }
 
+    $followings = $this->db_manager->get('Followings')->CountFollowingsByUserId($params['id']);
+
     return $this->render(array(
       'user' => $user,
       'posts' => $posts,
       'following' => $following,
       'editable' => $editable,
+      'followings' => $followings,
       '_token' => $this->generateCsrfToken('users/show'),
     ));
   }
@@ -339,5 +342,16 @@ class UsersController extends Controller {
     }
 
     return $this->redirect('/users/' . $follow_user['id']);
+  }
+
+  /**
+   * フォローしているユーザー一覧を表示する
+   */
+  public function followingsAction($params) {
+    $followings = $this->db_manager->get('Users')->fetchAllFollowingsByUserId($params['id']);
+
+    return $this->render(array(
+      'followings' => $followings,
+    ));
   }
 }

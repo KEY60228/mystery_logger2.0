@@ -2,6 +2,8 @@
 
 <h2><?php echo $this->escape($user['name']); ?></h2>
 
+<a href="<?php echo $base_url; ?>/users/<?php echo $user['id']; ?>/followings"><?php echo $followings; ?>フォロー</a>
+
 <?php if (!is_null($following)) : ?>
   <?php if ($following) : ?>
     <form action="<?php echo $base_url; ?>/unfollow" method="post">

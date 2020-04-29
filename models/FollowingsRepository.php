@@ -41,4 +41,15 @@ class FollowingsRepository extends DbRepository {
 
     return false;
   }
+
+  /**
+   * ユーザーIDを受け取り、そのユーザーがフォローしてるユーザーの数を返す
+   */
+  public function CountFollowingsByUserId($user_id) {
+    $sql = "SELECT COUNT(following_id) as count FROM followings WHERE user_id = :user_id";
+    $row = $this->fetch($sql, array(
+      ':user_id' => $user_id,
+    ));
+    return $row['count'];
+  }
 }
