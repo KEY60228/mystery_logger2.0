@@ -13,6 +13,17 @@ class FollowingsRepository extends DbRepository {
   }
 
   /**
+   * フォロー元のユーザーIDとフォロー先のユーザーIDを受け取り、DBにdelete文を実行する
+   */
+  public function delete($user_id, $following_id) {
+    $sql = "DELETE FROM followings WHERE user_id = :user_id AND following_id = :following_id";
+    $stmt = $this->execute($sql, array(
+      ':user_id' => $user_id,
+      ':following_id' => $following_id,
+    ));
+  }
+
+  /**
    * user_idとfollowing_idを受け取り、DBにセレクト文を実行、
    * 一致するuser_idとfollowing_idが0でなければtrue、それ以外ならばfalseを返す
    * (MySQLなら文字列で、pgsqlなら整数型で返ってくるようなので型を含めない比較にした)

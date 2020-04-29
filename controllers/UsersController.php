@@ -111,7 +111,7 @@ class UsersController extends Controller {
       'posts' => $posts,
       'following' => $following,
       'editable' => $editable,
-      '_token' => $this->generateCsrfToken('users/follow'),
+      '_token' => $this->generateCsrfToken('users/show'),
     ));
   }
 
@@ -218,7 +218,7 @@ class UsersController extends Controller {
     }
 
     $token = $this->request->getPost('_token');
-    if (!$this->checkCsrfToken('users/follow', $token)) {
+    if (!$this->checkCsrfToken('users/show', $token)) {
       return $this->redirect('/users/' . $following_name);
     }
 
@@ -302,5 +302,42 @@ class UsersController extends Controller {
       'errors' => $errors,
       '_token' => $this->generateCsrfToken('users/edit'),
     ), 'edit');
+  }
+
+  /**
+   * フォロー解除するアクション
+   * HTTPメソッドがPostでない、また、following_nameを受け取っていなかったら404に遷移
+   * CSRFトークンも照合し、不正な場合はリダイレクトさせる
+   * フォロー元のユーザーIDがフォロー先のユーザーIDと一致せず、既にフォローしているユーザーだった場合、
+   * Followingsテーブルにdelete文を実行し、フォロー先ユーザーの詳細ページにリダイレクトする
+   */
+  public function unfollowAction() {
+    if (!$this->request->isPost()) {
+      $this->forward404();
+    }
+
+    $following_name = $this->request->getPost('following_name');
+    if (!$following_name) {
+      $this->forward404();
+    }
+
+    $token = $this->request->getPost('_token');
+    if (!$this->checkCsrfToken('users/show', $token)) {
+      return $this->redirect('/users/' . $following_name);
+    }
+
+    $follow_user = $this->db_manager->get('Users')->fetchByUserName($following_name);
+    if (!$follow_user) {
+      $this->forward404();
+    }
+
+    $user = $this->session->get('user');
+
+    $followings_repository = $this->db_manager->get('Followings');
+    if ($user['id'] !== $follow_user['id'] && $followings_repository->isFollowing($user['id'], $follow_user['id'])) {
+      $followings_repository->delete($user['id'], $follow_user['id']);
+    }
+
+    return $this->redirect('/users/' . $follow_user['id']);
   }
 }

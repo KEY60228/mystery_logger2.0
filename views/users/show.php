@@ -4,7 +4,11 @@
 
 <?php if (!is_null($following)) : ?>
   <?php if ($following) : ?>
-    <p>フォローしています</p>
+    <form action="<?php echo $base_url; ?>/unfollow" method="post">
+      <input type="hidden" name="_token" value="<?php echo $this->escape($_token); ?>">
+      <input type="hidden" name="following_name" value="<?php echo $this->escape($user['name']) ?>">
+      <input type="submit" value="フォロー解除する">
+    </form>
   <?php else : ?>
     <form action="<?php echo $base_url; ?>/follow" method="post">
       <input type="hidden" name="_token" value="<?php echo $this->escape($_token); ?>">
