@@ -107,6 +107,7 @@ class UsersController extends Controller {
     }
 
     $followings = $this->db_manager->get('Followings')->CountFollowingsByUserId($params['id']);
+    $followers = $this->db_manager->get('Followings')->CountFollowersByUserId($params['id']);
 
     return $this->render(array(
       'user' => $user,
@@ -114,6 +115,7 @@ class UsersController extends Controller {
       'following' => $following,
       'editable' => $editable,
       'followings' => $followings,
+      'followers' => $followers,
       '_token' => $this->generateCsrfToken('users/show'),
     ));
   }
@@ -352,6 +354,17 @@ class UsersController extends Controller {
 
     return $this->render(array(
       'followings' => $followings,
+    ));
+  }
+  
+  /**
+   * フォローしているユーザー一覧を表示する
+   */
+  public function followersAction($params) {
+    $followers = $this->db_manager->get('Users')->fetchAllFollowersByUserId($params['id']);
+
+    return $this->render(array(
+      'followers' => $followers,
     ));
   }
 }
