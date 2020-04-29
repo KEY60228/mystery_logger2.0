@@ -29,8 +29,7 @@
   <?php endif; ?>
 <?php endif; ?>
 
-<div id="posts">
-  <?php foreach ($posts as $post) : ?>
-    <?php echo $this->render('posts/post', array('post' => $post)); ?>
-  <?php endforeach; ?>
-</div>
+<a href="<?php echo $base_url; ?>/users/<?php echo $user['id']; ?>/done">行った</a>
+<?php foreach ($wannas as $performance) : ?>
+  <?php echo $this->render('performances/performance', array('performance' => $performance)); ?>
+<?php endforeach; ?>

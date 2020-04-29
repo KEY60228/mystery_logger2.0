@@ -92,7 +92,44 @@ class UsersController extends Controller {
       $this->forward404();
     }
 
+    
+    $following = null;
+    $editable = null;
+    
+    if ($this->session->isAuthenticated()) {
+      $my = $this->session->get('user');
+      if ($my['id'] !== $user['id']) {
+        $following = $this->db_manager->get('Followings')->isFollowing($my['id'], $user['id']);
+      } else {
+        $editable = true;
+      }
+    }
+    
     $posts = $this->db_manager->get('Posts')->fetchAllByUserId($user['id']);
+    $followings = $this->db_manager->get('Followings')->CountFollowingsByUserId($params['id']);
+    $followers = $this->db_manager->get('Followings')->CountFollowersByUserId($params['id']);
+
+    return $this->render(array(
+      'user' => $user,
+      'posts' => $posts,
+      'following' => $following,
+      'editable' => $editable,
+      'followings' => $followings,
+      'followers' => $followers,
+      '_token' => $this->generateCsrfToken('users/show'),
+    ));
+  }
+
+  /**
+   * doneを表示させる
+   * (いずれJSに機能持たせたい)
+   */
+  public function doneAction($params) {
+    $user = $this->db_manager->get('Users')->fetchByUserId($params['id']);
+
+    if (!$user) {
+      $this->forward404();
+    }
 
     $following = null;
     $editable = null;
@@ -109,13 +146,54 @@ class UsersController extends Controller {
     $followings = $this->db_manager->get('Followings')->CountFollowingsByUserId($params['id']);
     $followers = $this->db_manager->get('Followings')->CountFollowersByUserId($params['id']);
 
+    $dones = $this->db_manager->get('Performances')->fetchAllDonesByUserId($user['id']);
+
     return $this->render(array(
       'user' => $user,
-      'posts' => $posts,
       'following' => $following,
       'editable' => $editable,
       'followings' => $followings,
       'followers' => $followers,
+      'dones' => $dones,
+      '_token' => $this->generateCsrfToken('users/show'),
+    ));
+  }
+
+  /**
+   * wannaを表示させる
+   * (いずれJSに機能持たせたい)
+   */
+  public function wannaAction($params) {
+    $user = $this->db_manager->get('Users')->fetchByUserId($params['id']);
+
+    if (!$user) {
+      $this->forward404();
+    }
+
+    $following = null;
+    $editable = null;
+
+    if ($this->session->isAuthenticated()) {
+      $my = $this->session->get('user');
+      if ($my['id'] !== $user['id']) {
+        $following = $this->db_manager->get('Followings')->isFollowing($my['id'], $user['id']);
+      } else {
+        $editable = true;
+      }
+    }
+
+    $followings = $this->db_manager->get('Followings')->CountFollowingsByUserId($params['id']);
+    $followers = $this->db_manager->get('Followings')->CountFollowersByUserId($params['id']);
+
+    $wannas = $this->db_manager->get('Performances')->fetchAllWannasByUserId($user['id']);
+
+    return $this->render(array(
+      'user' => $user,
+      'following' => $following,
+      'editable' => $editable,
+      'followings' => $followings,
+      'followers' => $followers,
+      'wannas' => $wannas,
       '_token' => $this->generateCsrfToken('users/show'),
     ));
   }

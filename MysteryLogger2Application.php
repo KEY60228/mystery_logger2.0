@@ -35,13 +35,19 @@ class MysteryLogger2Application extends Application {
       '/users/signout' => array('controller' => 'users', 'action' => 'signout'),
       '/users/edit' => array('controller' => 'users', 'action' => 'edit'),
       '/users/update' => array('controller' => 'users', 'action' => 'update'),
-      '/users/:id' => array('controller' => 'users', 'action' => 'show'),
+      '/users/:id' => array('controller' => 'users', 'action' => 'done'),
       '/users/:id/followings' => array('controller' => 'users', 'action' => 'followings'),
       '/users/:id/followers' => array('controller' => 'users', 'action' => 'followers'),
+      '/users/:id/done' => array('controller' => 'users', 'action' => 'done'),
+      '/users/:id/wanna' => array('controller' => 'users', 'action' => 'wanna'),
       '/follow' => array('controller' => 'users', 'action' => 'follow'),
       '/unfollow' => array('controller' => 'users', 'action' => 'unfollow'),
-      
+
       '/performances' => array('controller' => 'performances', 'action' => 'index'),
+      '/performances/done' => array('controller' => 'performances', 'action' => 'done'),
+      '/performances/undone' => array('controller' => 'performances', 'action' => 'undone'),
+      '/performances/interested' => array('controller' => 'performances', 'action' => 'interested'),
+      '/performances/disinterested' => array('controller' => 'performances', 'action' => 'disinterested'),
       '/performances/:id' => array('controller' => 'performances', 'action' => 'show'),
     );
   }
