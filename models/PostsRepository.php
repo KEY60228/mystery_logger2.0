@@ -77,7 +77,7 @@ class PostsRepository extends DbRepository {
    * 投稿IDを受け取り、DELETE文を実行する
    */
   public function delete($id) {
-    $sql = "DELETE posts WHERE id = :id";
+    $sql = "DELETE FROM posts WHERE id = :id";
     $stmt = $this->execute($sql, array(
       ':id' => $id,
     ));

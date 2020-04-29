@@ -140,17 +140,21 @@ class PostsController extends Controller {
    */
   public function destroyAction($params) {
 
-    // POST制限かけたいけどとりあえず
+    // POST制限かけたいけどaタグからだと難しそうだからとりあえず無視
+    // if (!$this->request->isPost()) {
+    //   $this->forward404();
+    // }
 
     $post = $this->db_manager->get('Posts')->fetchById($params['id']);
     $user = $this->session->get('user');
 
-    $token = $this->request->getPost('_token');
-    if(!$this->checkCsrfToken('posts/edit', $token)) {
-      return $this->redirect('/posts/' . $post['id'] . '/edit');
-    }
+    // トークンチェックもするべきだけどとりあえず無視
+    // $token = $this->request->getPost('_token');
+    // if(!$this->checkCsrfToken('posts/show', $token)) {
+    //   return $this->redirect('/posts/' . $post['id'] . '/edit');
+    // }
 
     $this->db_manager->get('Posts')->delete($post['id']);
-    return $this->redirect('users/' . $user['id']);
+    return $this->redirect('/users/' . $user['id']);
   }
 }
