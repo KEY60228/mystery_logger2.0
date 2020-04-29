@@ -19,6 +19,7 @@ class MysteryLogger2Application extends Application {
     return array(
       '/' => array('controller' => 'home', 'action' => 'top'),
       '/about' => array('controller' => 'home', 'action' => 'about'),
+
       '/posts' => array('controller' => 'posts', 'action' => 'index'),
       '/posts/new' => array('controller' => 'posts', 'action' => 'new'),
       '/posts/create' => array('controller' => 'posts', 'action' => 'create'),
@@ -26,6 +27,7 @@ class MysteryLogger2Application extends Application {
       '/posts/:id/edit' => array('controller' => 'posts', 'action' => 'edit'),
       '/posts/:id/update' => array('controller' => 'posts', 'action' => 'update'),
       '/posts/:id/destroy' => array('controller' => 'posts', 'action' => 'destroy'),
+
       '/users/signup' => array('controller' => 'users', 'action' => 'signup'),
       '/users/register' => array('controller' => 'users', 'action' => 'register'),
       '/users/signin' => array('controller' => 'users', 'action' => 'signin'),
@@ -38,6 +40,7 @@ class MysteryLogger2Application extends Application {
       '/users/:id/followers' => array('controller' => 'users', 'action' => 'followers'),
       '/follow' => array('controller' => 'users', 'action' => 'follow'),
       '/unfollow' => array('controller' => 'users', 'action' => 'unfollow'),
+      
       '/performances' => array('controller' => 'performances', 'action' => 'index'),
       '/performances/:id' => array('controller' => 'performances', 'action' => 'show'),
     );

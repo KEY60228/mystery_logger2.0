@@ -5,10 +5,12 @@ class FollowingsRepository extends DbRepository {
    * フォロー元のユーザーIDとフォロー先のユーザーIDを受け取り、DBにinsert文を実行する
    */
   public function insert($user_id, $following_id) {
-    $sql = "INSERT INTO followings (user_id, following_id) VALUES (:user_id, :following_id)";
+    $now = new DateTime();
+    $sql = "INSERT INTO followings (user_id, following_id, following_at) VALUES (:user_id, :following_id, :following_at)";
     $stmt = $this->execute($sql, array(
       ':user_id' => $user_id,
       ':following_id' => $following_id,
+      ':following_at' => $now->format('Y-m-d H:i:s')
     ));
   }
 

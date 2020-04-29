@@ -86,7 +86,7 @@ class UsersRepository extends DbRepository {
    * ユーザーIDを受け取ってフォローしているユーザーの情報を受け取る
    */
   public function fetchAllFollowingsByUserId($user_id) {
-    $sql = "SELECT users.* FROM users LEFT JOIN followings ON followings.following_id = users.id WHERE followings.user_id = :user_id";
+    $sql = "SELECT users.* FROM users LEFT JOIN followings ON followings.following_id = users.id WHERE followings.user_id = :user_id ORDER BY followings.following_at DESC";
     return $this->fetchAll($sql, array(':user_id' => $user_id));
   }
   
@@ -94,7 +94,7 @@ class UsersRepository extends DbRepository {
    * ユーザーIDを受け取ってフォローされているユーザーの情報を受け取る
    */
   public function fetchAllFollowersByUserId($user_id) {
-    $sql = "SELECT users.* FROM users LEFT JOIN followings ON followings.user_id = users.id WHERE followings.following_id = :user_id";
+    $sql = "SELECT users.* FROM users LEFT JOIN followings ON followings.user_id = users.id WHERE followings.following_id = :user_id ORDER BY followings.following_at DESC";
     return $this->fetchAll($sql, array(':user_id' => $user_id));
   }
 
