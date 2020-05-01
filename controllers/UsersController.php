@@ -353,7 +353,6 @@ class UsersController extends Controller {
     $user = $this->session->get('user');
     return $this->render(array(
       'user_name' => $user['name'],
-      'email' => $user['email'],
       '_token' => $this->generateCsrfToken('users/edit'),
     ));
   }
@@ -377,7 +376,6 @@ class UsersController extends Controller {
 
     $my = $this->session->get('user');
     $user_name = $this->request->getPost('user_name');
-    $email = $this->request->getPost('email');
 
     $profile_image = $this->request->getFile('profile_image');
     if (strlen($profile_image['tmp_name'])) {
@@ -399,14 +397,6 @@ class UsersController extends Controller {
     } elseif ($user_name !== $my['name'] && !$this->db_manager->get('Users')->isUniqueUserName($user_name)) {
       $errors[] = 'ユーザー名は既に使用されています';
     }
-    
-    if (!strlen($email)) {
-      $errors[] = 'メールアドレスを入力してください';
-    } elseif (!preg_match('/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/', $email)) {
-      $errors[] = 'メールアドレスを正しく入力してください';
-    } elseif ($email !== $my['email'] && !$this->db_manager->get('Users')->isUniqueMailAddress($email)) {
-      $errors[] = 'メールアドレスは既に使用されています';
-    }
 
     if (strlen($image_error) && $image_error != 'UPLOAD_ERR_OK') {
       $errors[] = 'アップロードエラーです';
@@ -418,7 +408,7 @@ class UsersController extends Controller {
 
     if (strlen($image_type)){
       $image_filename = sprintf('%s_%s.%s', time(), sha1(uniqid(mt_rand(), true)), $image_type);
-      $save_path = $this->application->getImagesDir() . '/' . $image_filename;
+      $save_path = $this->application->getUserImagesDir() . '/' . $image_filename;
     } else {
       $image_filename = $my['image_name'];
     }
@@ -429,7 +419,7 @@ class UsersController extends Controller {
         $upload = move_uploaded_file($profile_image['tmp_name'], $save_path);
       }
       if ($upload === true) {
-        $this->db_manager->get('Users')->update($my['id'], $user_name, $email, $image_filename);
+        $this->db_manager->get('Users')->update($my['id'], $user_name, $image_filename);
         $user = $this->db_manager->get('Users')->fetchByUserName($user_name);
         $this->session->set('user', $user);
         return $this->redirect('/users/' . $user['id']);
@@ -440,7 +430,6 @@ class UsersController extends Controller {
 
     return $this->render(array(
       'user_name' => $user_name,
-      'email' => $email,
       'errors' => $errors,
       '_token' => $this->generateCsrfToken('users/edit'),
     ), 'edit');

@@ -100,14 +100,14 @@ class UsersRepository extends DbRepository {
   }
 
   /**
-   * ユーザーID、ユーザー名、メールアドレスを受け取り、DBにupdate文を実行する
+   * ユーザーID、ユーザー名、ファイルを受け取り、DBにupdate文を実行する
+   * (メールアドレスは変更させない)
    */
-  public function update($user_id, $user_name, $email, $image_name) {
+  public function update($user_id, $user_name, $image_name) {
     $now = new DateTime();
-    $sql = "UPDATE users SET name = :user_name, email = :email, image_name = :image_name, updated_at = :updated_at WHERE id = :user_id";
+    $sql = "UPDATE users SET name = :user_name, image_name = :image_name, updated_at = :updated_at WHERE id = :user_id";
     $stmt = $this->execute($sql, array(
       ':user_name' => $user_name,
-      ':email' => $email,
       ':image_name' => $image_name,
       ':updated_at' => $now->format('Y-m-d H:i:s'),
       ':user_id' => $user_id,

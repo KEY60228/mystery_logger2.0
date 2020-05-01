@@ -9,19 +9,12 @@
     <?php echo $this->render('errors', array('errors' => $errors)); ?>
   <?php endif; ?>
 
-<!-- ここから -->
   <table>
     <tbody>
       <tr>
         <th>ユーザー名</th>
         <td>
           <input type="text" name="user_name" value="<?php echo $this->escape($user_name); ?>">
-        </td>
-      </tr>
-      <tr>
-        <th>メールアドレス</th>
-        <td>
-          <input type="text" name="email" value="<?php echo $this->escape($email); ?>">
         </td>
       </tr>
       <tr>
@@ -32,7 +25,6 @@
       </tr>
     </tbody>
   </table>
-<!-- ここまで、後程共通ビューファイルに分離したい -->
 
   <p>
     <input type="submit" value="保存">
