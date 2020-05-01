@@ -1,5 +1,7 @@
 <?php $this->setLayoutVar('title', $user['name']) ?>
 
+<img src="<?php echo $base_url; ?>/images/<?php echo $user['image_name']; ?>" alt="プロフィール画像">
+
 <h2><?php echo $this->escape($user['name']); ?></h2>
 
 <a href="<?php echo $base_url; ?>/users/<?php echo $user['id']; ?>/followings"><?php echo $followings; ?>フォロー</a>

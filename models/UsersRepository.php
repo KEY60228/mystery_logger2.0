@@ -6,15 +6,16 @@ class UsersRepository extends DbRepository {
    * パスワードをハッシュ化した後にDBにINSERT文を実行する
    * (何故$stmtに代入しているかは不明…)
    */
-  public function insert($user_name, $email, $password) {
+  public function insert($user_name, $email, $password, $image_name) {
     $password = $this->hashPassword($password);
     $now = new DateTime();
-    $sql = "INSERT INTO users (name, email, password, created_at) VALUES (:user_name, :email, :password, :created_at)";
+    $sql = "INSERT INTO users (name, email, password, image_name, created_at) VALUES (:user_name, :email, :password, :image_name, :created_at)";
 
     $stmt = $this->execute($sql, array(
       ':user_name' => $user_name,
       ':email' => $email,
       ':password' => $password,
+      ':image_name' => $image_name,
       ':created_at' => $now->format('Y-m-d H:i:s'),
     ));
   }

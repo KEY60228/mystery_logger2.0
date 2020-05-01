@@ -12,6 +12,13 @@ class MysteryLogger2Application extends Application {
   }
 
   /**
+   * imageディレクトリ へのパスを返す
+   */
+  public function getImagesDir() {
+    return $this->getRootDir() . '/views/images';
+  }
+
+  /**
    * ルーティング定義配列を返す
    */
   protected function registerRoutes() {
@@ -42,6 +49,7 @@ class MysteryLogger2Application extends Application {
       '/users/:id/wanna' => array('controller' => 'users', 'action' => 'wanna'),
       '/follow' => array('controller' => 'users', 'action' => 'follow'),
       '/unfollow' => array('controller' => 'users', 'action' => 'unfollow'),
+      '/images/:image' => array('controller' => 'users', 'action' => 'image'), 
 
       '/performances' => array('controller' => 'performances', 'action' => 'index'),
       '/performances/done' => array('controller' => 'performances', 'action' => 'done'),

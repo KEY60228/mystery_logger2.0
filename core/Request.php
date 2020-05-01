@@ -93,4 +93,31 @@ class Request {
     $path_info = (string)substr($request_uri, strlen($base_url));
     return $path_info;
   }
+
+  /**
+   * 画像アップロード用に追加
+   * 識別子$nameを受け取り、あれば$_FILEを返しなければ$defaultを返す
+   */
+  public function getFile($name, $default = null) {
+    if(isset($_FILES[$name])) {
+      return $_FILES[$name];
+    }
+    return $default;
+  }
+
+  /**
+   * アップロードされた画像の拡張子を返す
+   */
+  public function getImageType($filename) {
+    switch (exif_imagetype($filename)) {
+      case IMAGETYPE_JPEG:
+        return 'jpeg';
+        break;
+      case IMAGETYPE_PNG:
+        return 'png';
+        break;
+      default:
+        return null;
+    }
+  }
 }

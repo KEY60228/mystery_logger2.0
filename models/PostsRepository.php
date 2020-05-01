@@ -21,7 +21,7 @@ class PostsRepository extends DbRepository {
    * 該当のユーザーIDのユーザーの名前と投稿情報全てを抽出する (タイムライン用)
    */
   public function fetchAllPersonalArchivesByUserId($user_id) {
-    $sql = "SELECT posts.*, users.name AS user_name, performances.name AS performance_name FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN followings ON followings.following_id = posts.user_id AND followings.user_id = :user_id LEFT JOIN performances ON performances.id = posts.performance_id WHERE followings.user_id = :user_id OR users.id = :user_id ORDER BY posts.created_at DESC";
+    $sql = "SELECT posts.*, users.name AS user_name, users.image_name AS user_image, performances.name AS performance_name FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN followings ON followings.following_id = posts.user_id AND followings.user_id = :user_id LEFT JOIN performances ON performances.id = posts.performance_id WHERE followings.user_id = :user_id OR users.id = :user_id ORDER BY posts.created_at DESC";
 
     return $this->fetchAll($sql, array(':user_id' => $user_id));
   }
@@ -31,7 +31,7 @@ class PostsRepository extends DbRepository {
    * 該当のユーザーIDのユーザーの名前と投稿情報全てを抽出する (users/showアクション用)
    */
   public function fetchAllByUserId($user_id) {
-    $sql = "SELECT posts.*, users.name FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE users.id = :user_id ORDER BY posts.created_at DESC";
+    $sql = "SELECT posts.*, users.name users.image_name, FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE users.id = :user_id ORDER BY posts.created_at DESC";
 
     return $this->fetchAll($sql, array(':user_id' => $user_id));
   }
@@ -41,7 +41,7 @@ class PostsRepository extends DbRepository {
    * 該当の投稿IDのユーザーの名前と投稿情報全てを抽出する (posts/showアクション用)
    */
   public function fetchById($id) {
-    $sql = "SELECT posts.*, users.name AS user_name, performances.name AS performance_name FROM posts LEFT JOIN users ON users.id = posts.user_id LEFT JOIN performances ON performances.id = posts.performance_id WHERE posts.id = :id";
+    $sql = "SELECT posts.*, users.name, users.image_name, performances.name AS performance_name FROM posts LEFT JOIN users ON users.id = posts.user_id LEFT JOIN performances ON performances.id = posts.performance_id WHERE posts.id = :id";
     
     return $this->fetch($sql, array(
       ':id' => $id,
@@ -53,7 +53,7 @@ class PostsRepository extends DbRepository {
    * 該当の公演IDの公演情報と投稿情報全てを抽出する (performances/showアクション用)
    */
   public function fetchAllByPerformanceId($performance_id) {
-    $sql = "SELECT posts.*, users.name AS user_name, performances.name AS performance_name FROM posts LEFT JOIN users ON users.id = posts.user_id LEFT JOIN performances ON posts.performance_id = performances.id WHERE performance_id = :performance_id ORDER BY posts.created_at DESC";
+    $sql = "SELECT posts.*, users.name AS user_name, users.image_name AS user_image, performances.name AS performance_name FROM posts LEFT JOIN users ON users.id = posts.user_id LEFT JOIN performances ON posts.performance_id = performances.id WHERE performance_id = :performance_id ORDER BY posts.created_at DESC";
 
     return $this->fetchAll($sql, array(
       ':performance_id' => $performance_id,

@@ -30,7 +30,7 @@
         </td>
       </tr>
       <tr>
-        <th>プロフィール画像</th>
+        <th>プロフィール画像 (jpeg, pngのみ)</th>
         <td>
           <input type="file" name="profile_image">
         </td>

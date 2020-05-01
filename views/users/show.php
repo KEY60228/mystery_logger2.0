@@ -1,9 +1,8 @@
 <?php $this->setLayoutVar('title', $user['name']) ?>
 
-<h2><?php echo $this->escape($user['name']); ?></h2>
-
 <a href="<?php echo $base_url; ?>/users/<?php echo $user['id']; ?>/followings"><?php echo $followings; ?>フォロー</a>
 <a href="<?php echo $base_url; ?>/users/<?php echo $user['id']; ?>/followers"><?php echo $followers; ?>フォロワー</a>
+
 
 <?php if (!is_null($following)) : ?>
   <?php if ($following) : ?>

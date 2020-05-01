@@ -36,7 +36,17 @@ class UsersController extends Controller {
     $user_name = $this->request->getPost('user_name');
     $email = $this->request->getPost('email');
     $password = $this->request->getPost('password');
-
+    // デフォルト画像あとで指定したい
+    $profile_image = $this->request->getFile('profile_image');
+    if (isset($profile_image)) {
+      $image_error = $profile_image['error'];
+      $image_type = $this->request->getImageType($profile_image['tmp_name']);
+    } else {
+      $profile_image = '';
+      $image_error = '';
+      $image_type = '';
+    }
+    
     $errors = array();
 
     if (!strlen($user_name)) {
@@ -56,21 +66,34 @@ class UsersController extends Controller {
       $errors[] = 'メールアドレスは既に使用されています';
     }
 
-    if (!strlen($password)) {
-      $errors[] = 'パスワードを入力してください';
-    } elseif (!preg_match('/^\w{4,40}$/', $password)) {
-      // とりあえずね
-      $errors[] = 'パスワードは半角英数ならびにアンダースコアを4〜40字で入力してください';
+    // デフォルト画像実装するまではとりあえず
+    if (strlen($image_error) && $image_error != 'UPLOAD_ERR_OK') {
+      $errors[] = 'アップロードエラーです';
     }
+
+    if (strlen($image_type) && ($image_type !== 'jpeg' && $image_type !== 'png')) {
+      $errors[] = 'jpegかpngファイルのみ可能です';
+    }
+
+    $image_filename = sprintf('%s_%s.%s', time(), sha1(uniqid(mt_rand(), true)), $image_type);
+    $save_path = $this->application->getImagesDir() . '/' . $image_filename;
 
     if (count($errors) === 0) {
-      $this->db_manager->get('Users')->insert($user_name, $email, $password);
-      $this->session->setAuthenticated(true);
-      $user = $this->db_manager->get('Users')->fetchByUserName($user_name);
-      $this->session->set('user', $user);
-      return $this->redirect('/users/' . $user['id']);
+      $upload = true;
+      if (strlen($image_error) && $image_error == 'UPLOAD_ERR_OK') {
+        $upload = move_uploaded_file($profile_image['tmp_name'], $save_path);
+      }
+      if ($upload === true) {
+        $this->db_manager->get('Users')->insert($user_name, $email, $password, $image_filename);
+        $this->session->setAuthenticated(true);
+        $user = $this->db_manager->get('Users')->fetchByUserName($user_name);
+        $this->session->set('user', $user);
+        return $this->redirect('/users/' . $user['id']);  
+      } else {
+        $errors[] = '画像のアップロード中に何か問題が起きました。管理者に問合せください';
+      }
     }
-
+    
     return $this->render(array(
       'user_name' => $user_name,
       'email' => $email,
@@ -85,40 +108,40 @@ class UsersController extends Controller {
    * postsテーブルから投稿情報とユーザー情報を抽出し、ページを表示する
    * ユーザーが存在しなかった場合は404ページに遷移させる
    */
-  public function showAction($params) {
-    $user = $this->db_manager->get('Users')->fetchByUserId($params['id']);
+  // public function showAction($params) {
+  //   $user = $this->db_manager->get('Users')->fetchByUserId($params['id']);
 
-    if (!$user) {
-      $this->forward404();
-    }
+  //   if (!$user) {
+  //     $this->forward404();
+  //   }
 
     
-    $following = null;
-    $editable = null;
+  //   $following = null;
+  //   $editable = null;
     
-    if ($this->session->isAuthenticated()) {
-      $my = $this->session->get('user');
-      if ($my['id'] !== $user['id']) {
-        $following = $this->db_manager->get('Followings')->isFollowing($my['id'], $user['id']);
-      } else {
-        $editable = true;
-      }
-    }
+  //   if ($this->session->isAuthenticated()) {
+  //     $my = $this->session->get('user');
+  //     if ($my['id'] !== $user['id']) {
+  //       $following = $this->db_manager->get('Followings')->isFollowing($my['id'], $user['id']);
+  //     } else {
+  //       $editable = true;
+  //     }
+  //   }
     
-    $posts = $this->db_manager->get('Posts')->fetchAllByUserId($user['id']);
-    $followings = $this->db_manager->get('Followings')->CountFollowingsByUserId($params['id']);
-    $followers = $this->db_manager->get('Followings')->CountFollowersByUserId($params['id']);
+  //   $posts = $this->db_manager->get('Posts')->fetchAllByUserId($user['id']);
+  //   $followings = $this->db_manager->get('Followings')->CountFollowingsByUserId($params['id']);
+  //   $followers = $this->db_manager->get('Followings')->CountFollowersByUserId($params['id']);
 
-    return $this->render(array(
-      'user' => $user,
-      'posts' => $posts,
-      'following' => $following,
-      'editable' => $editable,
-      'followings' => $followings,
-      'followers' => $followers,
-      '_token' => $this->generateCsrfToken('users/show'),
-    ));
-  }
+  //   return $this->render(array(
+  //     'user' => $user,
+  //     'posts' => $posts,
+  //     'following' => $following,
+  //     'editable' => $editable,
+  //     'followings' => $followings,
+  //     'followers' => $followers,
+  //     '_token' => $this->generateCsrfToken('users/show'),
+  //   ));
+  // }
 
   /**
    * doneを表示させる
@@ -444,5 +467,15 @@ class UsersController extends Controller {
     return $this->render(array(
       'followers' => $followers,
     ));
+  }
+
+  /**
+   * イメージファイルの名前を受け取って返すアクション
+   */
+  public function imageAction($params) {
+    $img_file = $this->application->getImagesDir() . '/' . $params['image'];
+    $img_info = getimagesize($img_file);
+    header('Content-Type: ' . $img_info['mime']);
+    readfile($img_file);  
   }
 }
