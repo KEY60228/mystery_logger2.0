@@ -76,7 +76,7 @@ class UsersController extends Controller {
 
     if (strlen($image_type)){
       $image_filename = sprintf('%s_%s.%s', time(), sha1(uniqid(mt_rand(), true)), $image_type);
-      $save_path = $this->application->getImagesDir() . '/' . $image_filename;
+      $save_path = $this->application->getUserImagesDir() . '/' . $image_filename;
     } else {
       $image_filename = "default.jpeg";
     }
@@ -509,7 +509,7 @@ class UsersController extends Controller {
    * イメージファイルの名前を受け取って返すアクション
    */
   public function imageAction($params) {
-    $img_file = $this->application->getImagesDir() . '/' . $params['image'];
+    $img_file = $this->application->getUserImagesDir() . '/' . $params['image'];
     $img_info = getimagesize($img_file);
     header('Content-Type: ' . $img_info['mime']);
     readfile($img_file);  
