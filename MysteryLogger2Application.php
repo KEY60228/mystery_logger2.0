@@ -49,7 +49,8 @@ class MysteryLogger2Application extends Application {
       '/users/:id/wanna' => array('controller' => 'users', 'action' => 'wanna'),
       '/follow' => array('controller' => 'users', 'action' => 'follow'),
       '/unfollow' => array('controller' => 'users', 'action' => 'unfollow'),
-      '/images/:image' => array('controller' => 'users', 'action' => 'image'), 
+      // クールじゃない気がする…
+      '/images/:image' => array('controller' => 'users', 'action' => 'image'),
 
       '/performances' => array('controller' => 'performances', 'action' => 'index'),
       '/performances/done' => array('controller' => 'performances', 'action' => 'done'),

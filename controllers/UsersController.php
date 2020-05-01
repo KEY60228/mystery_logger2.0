@@ -36,9 +36,9 @@ class UsersController extends Controller {
     $user_name = $this->request->getPost('user_name');
     $email = $this->request->getPost('email');
     $password = $this->request->getPost('password');
-    // デフォルト画像あとで指定したい
+
     $profile_image = $this->request->getFile('profile_image');
-    if (isset($profile_image)) {
+    if (strlen($profile_image['tmp_name'])) {
       $image_error = $profile_image['error'];
       $image_type = $this->request->getImageType($profile_image['tmp_name']);
     } else {
@@ -46,7 +46,7 @@ class UsersController extends Controller {
       $image_error = '';
       $image_type = '';
     }
-    
+
     $errors = array();
 
     if (!strlen($user_name)) {
@@ -66,7 +66,6 @@ class UsersController extends Controller {
       $errors[] = 'メールアドレスは既に使用されています';
     }
 
-    // デフォルト画像実装するまではとりあえず
     if (strlen($image_error) && $image_error != 'UPLOAD_ERR_OK') {
       $errors[] = 'アップロードエラーです';
     }
@@ -75,8 +74,12 @@ class UsersController extends Controller {
       $errors[] = 'jpegかpngファイルのみ可能です';
     }
 
-    $image_filename = sprintf('%s_%s.%s', time(), sha1(uniqid(mt_rand(), true)), $image_type);
-    $save_path = $this->application->getImagesDir() . '/' . $image_filename;
+    if (strlen($image_type)){
+      $image_filename = sprintf('%s_%s.%s', time(), sha1(uniqid(mt_rand(), true)), $image_type);
+      $save_path = $this->application->getImagesDir() . '/' . $image_filename;
+    } else {
+      $image_filename = "default.jpeg";
+    }
 
     if (count($errors) === 0) {
       $upload = true;
@@ -376,6 +379,16 @@ class UsersController extends Controller {
     $user_name = $this->request->getPost('user_name');
     $email = $this->request->getPost('email');
 
+    $profile_image = $this->request->getFile('profile_image');
+    if (strlen($profile_image['tmp_name'])) {
+      $image_error = $profile_image['error'];
+      $image_type = $this->request->getImageType($profile_image['tmp_name']);
+    } else {
+      $profile_image = '';
+      $image_error = '';
+      $image_type = '';
+    }
+
     $errors = array();
 
     if (!strlen($user_name)) {
@@ -395,11 +408,34 @@ class UsersController extends Controller {
       $errors[] = 'メールアドレスは既に使用されています';
     }
 
+    if (strlen($image_error) && $image_error != 'UPLOAD_ERR_OK') {
+      $errors[] = 'アップロードエラーです';
+    }
+
+    if (strlen($image_type) && ($image_type !== 'jpeg' && $image_type !== 'png')) {
+      $errors[] = 'jpegかpngファイルのみ可能です';
+    }
+
+    if (strlen($image_type)){
+      $image_filename = sprintf('%s_%s.%s', time(), sha1(uniqid(mt_rand(), true)), $image_type);
+      $save_path = $this->application->getImagesDir() . '/' . $image_filename;
+    } else {
+      $image_filename = $my['image_name'];
+    }
+
     if (count($errors) === 0) {
-      $this->db_manager->get('Users')->update($my['id'], $user_name, $email);
-      $user = $this->db_manager->get('Users')->fetchByUserName($user_name);
-      $this->session->set('user', $user);
-      return $this->redirect('/users/' . $user['id']);
+      $upload = true;
+      if (strlen($image_error) && $image_error == 'UPLOAD_ERR_OK') {
+        $upload = move_uploaded_file($profile_image['tmp_name'], $save_path);
+      }
+      if ($upload === true) {
+        $this->db_manager->get('Users')->update($my['id'], $user_name, $email, $image_filename);
+        $user = $this->db_manager->get('Users')->fetchByUserName($user_name);
+        $this->session->set('user', $user);
+        return $this->redirect('/users/' . $user['id']);
+      } else {
+        $errors[] = '画像のアップロード中に何か問題が起きました。管理者に問合せください';
+      }
     }
 
     return $this->render(array(

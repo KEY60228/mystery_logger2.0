@@ -2,7 +2,7 @@
 
 <h2>ユーザー情報の編集</h2>
 
-<form action="<?php echo $base_url; ?>/users/update" method="post">
+<form action="<?php echo $base_url; ?>/users/update" method="post" enctype="multipart/form-data">
   <input type="hidden" name="_token" value="<?php echo $this->escape($_token); ?>">
 
   <?php if (isset($errors) && count($errors) > 0): ?>
@@ -22,6 +22,12 @@
         <th>メールアドレス</th>
         <td>
           <input type="text" name="email" value="<?php echo $this->escape($email); ?>">
+        </td>
+      </tr>
+      <tr>
+        <th>プロフィール画像 (jpeg, pngのみ)</th>
+        <td>
+          <input type="file" name="profile_image">
         </td>
       </tr>
     </tbody>
