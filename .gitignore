@@ -4,5 +4,6 @@
 # sql文書いたテキストファイル
 sql.txt
 
-# imagesフォルダも不要
-/images/
+# imagesフォルダ
+/views/user_images/
+/views/performance_images/
