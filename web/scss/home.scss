@@ -1,0 +1,44 @@
+@import "_variables";
+
+/* top.php */
+
+.top-container {
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  background-image: url(exit.jpg);
+  background-size: cover;
+
+  color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  h1 {
+    font-size: 72px;
+    font-weight: normal;
+  }
+  
+  p {
+    font-size: 32px;
+  }
+}
+
+/* about.php */
+
+.about-container {
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  background-image: url(exit.jpg);
+  background-size: cover;
+
+  color: whitesmoke;
+}
+
+.about-message {
+  position: relative;
+  top: $header_height;
+
+}
