@@ -1,0 +1,78 @@
+@charset "UTF-8";
+@import url(home);
+@import url(performances);
+@import url(posts);
+@import url(users);
+
+/* GLOBAL */
+
+* {
+  padding: 0;
+  margin: 0;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  li {
+    list-style-type: none;
+  }
+}
+
+/* layout.php */
+
+header {
+  width: 100%;
+  height: 64px;
+  display: flex;
+  background-color: dimgray;
+
+  p {
+    margin-left: 16px;
+
+    a {
+      color: whitesmoke;
+      font-size: 24px;
+      line-height: 64px;
+      display: inline-block;
+    }
+  }
+
+  nav {
+    margin-left: auto;
+    
+    ul {
+      display: flex;
+
+      li {
+        margin-right: 16px;
+        
+        a{
+          color: whitesmoke;
+          font-size: 16px;
+          line-height: 64px;
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
+
+footer {
+  width: 100%;
+  height: 48px;
+  background-color: dimgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    color: whitesmoke;
+    font-size: 12px;
+  }
+}

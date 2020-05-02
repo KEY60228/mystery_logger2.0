@@ -7,3 +7,11 @@ sql.txt
 # imagesフォルダ
 /views/user_images/
 /views/performance_images/
+
+# sass関係
+/.sass-cache
+/web/css/style.css.map
+/web/css/home.css.map
+/web/css/performances.css.map
+/web/css/users.css.map
+/web/css/posts.css.map

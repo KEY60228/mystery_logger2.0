@@ -1,0 +1,53 @@
+@import url(home);
+@import url(performances);
+@import url(posts);
+@import url(users);
+/* GLOBAL */
+* {
+  padding: 0;
+  margin: 0; }
+  * a {
+    text-decoration: none; }
+    * a:hover {
+      text-decoration: underline; }
+  * li {
+    list-style-type: none; }
+
+/* layout.php */
+header {
+  width: 100%;
+  height: 64px;
+  display: flex;
+  background-color: dimgray; }
+  header p {
+    margin-left: 16px; }
+    header p a {
+      color: whitesmoke;
+      font-size: 24px;
+      line-height: 64px;
+      display: inline-block; }
+  header nav {
+    margin-left: auto; }
+    header nav ul {
+      display: flex; }
+      header nav ul li {
+        margin-right: 16px; }
+        header nav ul li a {
+          color: whitesmoke;
+          font-size: 16px;
+          line-height: 64px;
+          display: inline-block; }
+
+footer {
+  width: 100%;
+  height: 48px;
+  background-color: dimgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  footer p {
+    color: whitesmoke;
+    font-size: 12px; }
+
+/*# sourceMappingURL=style.css.map */
