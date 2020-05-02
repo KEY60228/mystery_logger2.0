@@ -48,7 +48,7 @@
 
   <main>
     <?php echo $_content; ?>
-  <main>
+  </main>
 
   <footer>
     <p> - なぞログ - </p>

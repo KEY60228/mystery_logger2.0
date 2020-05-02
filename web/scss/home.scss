@@ -1,11 +1,10 @@
-@import "_variables";
+@import "variables";
 
 /* top.php */
 
 .top-container {
   width: 100%;
-  height: auto;
-  min-height: 100vh;
+  height: 100vh;
   background-image: url(exit.jpg);
   background-size: cover;
 
@@ -29,8 +28,7 @@
 
 .about-container {
   width: 100%;
-  height: auto;
-  min-height: 100vh;
+  height: 100vh;
   background-image: url(exit.jpg);
   background-size: cover;
 
@@ -38,7 +36,20 @@
 }
 
 .about-message {
-  position: relative;
-  top: $header_height;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
+  h1 {
+    font-weight: normal;
+    margin-left: 52px;
+    margin-bottom: 36px;
+  }
+
+  p {
+    margin-left: 52px;
+    margin-bottom: 16px;
+  }
 }

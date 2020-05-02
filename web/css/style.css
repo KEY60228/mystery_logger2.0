@@ -1,7 +1,7 @@
-@import url(./home/home.css);
-@import url(./performances/performances.css);
-@import url(./posts/posts.css);
-@import url(./users/users.css);
+@import url(./home.css);
+@import url(./performances.css);
+@import url(./posts.css);
+@import url(./users.css);
 /* GLOBAL */
 * {
   padding: 0;
