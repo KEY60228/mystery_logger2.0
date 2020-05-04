@@ -33,7 +33,7 @@ header {
   height: $header_height;
   display: flex;
   background-color: dimgray;
-  position: fixed;
+  // position: fixed;
   z-index: 1;
 
   p {
@@ -75,8 +75,8 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  bottom: 0;
+  // position: relative;
+  // bottom: 0;
   z-index: 1;
 
   p {

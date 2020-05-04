@@ -3,7 +3,6 @@
 <a href="<?php echo $base_url; ?>/users/<?php echo $user['id']; ?>/followings"><?php echo $followings; ?>フォロー</a>
 <a href="<?php echo $base_url; ?>/users/<?php echo $user['id']; ?>/followers"><?php echo $followers; ?>フォロワー</a>
 
-
 <?php if (!is_null($following)) : ?>
   <?php if ($following) : ?>
     <form action="<?php echo $base_url; ?>/unfollow" method="post">

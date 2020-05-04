@@ -1,6 +1,6 @@
 <?php $this->setLayoutVar('title', $user['name']) ?>
 
-<img src="<?php echo $base_url; ?>/user_images/<?php echo $user['image_name']; ?>" alt="プロフィール画像">
+<img src="/user_images/<?php echo $user['image_name']; ?>" alt="プロフィール画像">
 
 <h2><?php echo $this->escape($user['name']); ?></h2>
 

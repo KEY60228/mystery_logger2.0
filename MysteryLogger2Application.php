@@ -15,14 +15,14 @@ class MysteryLogger2Application extends Application {
    * user_imageディレクトリ へのパスを返す
    */
   public function getUserImagesDir() {
-    return $this->getRootDir() . '/views/user_images';
+    return $this->getRootDir() . '/web/user_images';
   }
 
   /**
    * performance_imageディレクトリ へのパスを返す
    */
   public function getPerformanceImagesDir() {
-    return $this->getRootDir() . '/views/performance_images';
+    return $this->getRootDir() . '/web/performance_images';
   }
 
   /**
@@ -56,8 +56,6 @@ class MysteryLogger2Application extends Application {
       '/users/:id/wanna' => array('controller' => 'users', 'action' => 'wanna'),
       '/follow' => array('controller' => 'users', 'action' => 'follow'),
       '/unfollow' => array('controller' => 'users', 'action' => 'unfollow'),
-      // クールじゃない気がする…
-      '/user_images/:image' => array('controller' => 'users', 'action' => 'image'),
 
       '/performances' => array('controller' => 'performances', 'action' => 'index'),
       '/performances/done' => array('controller' => 'performances', 'action' => 'done'),
@@ -65,8 +63,6 @@ class MysteryLogger2Application extends Application {
       '/performances/interested' => array('controller' => 'performances', 'action' => 'interested'),
       '/performances/disinterested' => array('controller' => 'performances', 'action' => 'disinterested'),
       '/performances/:id' => array('controller' => 'performances', 'action' => 'show'),
-      // クールじゃない気がする…
-      '/performance_images/:image' => array('controller' => 'performances', 'action' => 'image'),
     );
   }
 

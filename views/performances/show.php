@@ -1,5 +1,6 @@
 <?php $this->setLayoutVar('title', $performance['name']); ?>
 
+<img src="/performance_images/<?php echo $this->escape($performance['image_name']) ?>" alt="公演画像">
 <h2><?php echo $this->escape($performance['name']); ?></h2>
 
 <?php if ($done): ?>

@@ -20,7 +20,6 @@ header {
   height: 64px;
   display: flex;
   background-color: dimgray;
-  position: fixed;
   z-index: 1; }
   header p {
     margin-left: 16px; }
@@ -48,10 +47,7 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  z-index: 1; }
+  align-items: center; }
   footer p {
     color: whitesmoke;
     font-size: 12px; }

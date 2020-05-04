@@ -5,8 +5,8 @@
 sql.txt
 
 # imagesフォルダ
-/views/user_images/
-/views/performance_images/
+/web/user_images/
+/web/performance_images/
 
 # sass関係
 /.sass-cache
