@@ -41,7 +41,7 @@ class PostsRepository extends DbRepository {
    * 該当の投稿IDのユーザーの名前と投稿情報全てを抽出する (posts/showアクション用)
    */
   public function fetchById($id) {
-    $sql = "SELECT posts.*, users.name, users.image_name, performances.name AS performance_name FROM posts LEFT JOIN users ON users.id = posts.user_id LEFT JOIN performances ON performances.id = posts.performance_id WHERE posts.id = :id";
+    $sql = "SELECT posts.*, users.name AS user_name, users.image_name AS user_image, performances.name AS performance_name, performances.image_name AS performance_image FROM posts LEFT JOIN users ON users.id = posts.user_id LEFT JOIN performances ON performances.id = posts.performance_id WHERE posts.id = :id";
     
     return $this->fetch($sql, array(
       ':id' => $id,
