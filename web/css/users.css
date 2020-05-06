@@ -1,3 +1,61 @@
-
+/* users/signup.php, /users/signin.php */
+.background-img {
+  width: 100%;
+  height: calc(100vh - 48px);
+  background-image: url(exit.jpg);
+  background-size: cover;
+  display: flex;
+  justify-content: center; }
+  .background-img .before-login-container {
+    position: absolute;
+    top: calc(64px + 50px);
+    height: 70%;
+    width: 60%;
+    background-color: lightgray;
+    box-shadow: 4px 4px gray;
+    color: black; }
+    .background-img .before-login-container h2 {
+      margin-top: 20px;
+      text-align: center;
+      border-bottom: 1px solid gray;
+      padding-bottom: 20px; }
+    .background-img .before-login-container .before-login-form {
+      margin-top: 20px; }
+      .background-img .before-login-container .before-login-form .before-login-client-input {
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        width: 85%; }
+        .background-img .before-login-container .before-login-form .before-login-client-input .before-login-client-content {
+          margin-bottom: 12px; }
+          .background-img .before-login-container .before-login-form .before-login-client-input .before-login-client-content p {
+            margin-bottom: 4px; }
+          .background-img .before-login-container .before-login-form .before-login-client-input .before-login-client-content input {
+            width: 100%;
+            padding: 8px;
+            font-size: 12px;
+            border-radius: 3px;
+            border: 2px solid gray;
+            box-sizing: border-box;
+            box-shadow: 4px 4px gray; }
+        .background-img .before-login-container .before-login-form .before-login-client-input .before-login-client-img {
+          display: flex;
+          align-items: center; }
+          .background-img .before-login-container .before-login-form .before-login-client-input .before-login-client-img input {
+            margin-left: 16px; }
+        .background-img .before-login-container .before-login-form .before-login-client-input .before-login-button {
+          display: inline-block;
+          width: 50%;
+          margin: 20px auto;
+          padding: 8px;
+          background-color: dodgerblue;
+          color: whitesmoke;
+          font-size: 12px;
+          box-shadow: 4px 4px gray;
+          border: 2px solid black; }
+          .background-img .before-login-container .before-login-form .before-login-client-input .before-login-button:hover {
+            box-shadow: none;
+            background-color: whitesmoke;
+            color: dodgerblue; }
 
 /*# sourceMappingURL=users.css.map */

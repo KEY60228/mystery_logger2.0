@@ -1,2 +1,86 @@
 @import "variables";
 
+/* users/signup.php, /users/signin.php */
+.background-img {
+  width: 100%;
+  height: calc(100vh - #{$footer_height});
+  background-image: url(exit.jpg);
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  
+  .before-login-container {
+    position: absolute;
+    top: calc(#{$header_height} + 50px);
+    height: 70%;
+    width: 60%;
+    background-color: lightgray;
+    box-shadow: 4px 4px gray;
+    color: black;
+
+    h2 {
+      margin-top: 20px;
+      text-align: center;
+      border-bottom: 1px solid gray;
+      padding-bottom: 20px;
+    }
+
+    .before-login-form {
+      margin-top: 20px;
+
+      .before-login-client-input {
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        width: 85%;
+        
+        .before-login-client-content {  
+          margin-bottom: 12px;
+
+          p {
+            margin-bottom: 4px;
+          }
+
+          input {
+            width: 100%;
+            padding: 8px;
+            font-size: 12px;
+            border-radius: 3px;
+            border: 2px solid gray;
+            box-sizing: border-box;
+            box-shadow: 4px 4px gray;
+          }
+        }
+
+        .before-login-client-img{
+          display: flex;
+          align-items: center;
+
+          input {
+            margin-left: 16px;
+          }
+        }
+
+        .before-login-button {
+          display: inline-block;
+          width: 50%;
+          margin: 20px auto;
+          padding: 8px;
+          background-color: dodgerblue;
+          color: whitesmoke;
+          font-size: 12px;
+          box-shadow: 4px 4px gray;
+          border: 2px solid black; 
+
+          &:hover {
+            box-shadow: none;
+            background-color: whitesmoke;
+            color: dodgerblue;
+          }
+        }
+      }
+
+    }
+  }
+}
+

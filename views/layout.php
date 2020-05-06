@@ -55,5 +55,6 @@
     <p>Copyright <a href="https://twitter.com/tatsuya_gucci" target=”_blank”>@tatsuya_gucci</a></p>
   </footer>
 
+  <script src="/js/main.js"></script>
 </body>
 </html>

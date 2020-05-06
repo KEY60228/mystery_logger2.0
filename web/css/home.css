@@ -1,7 +1,7 @@
 /* top.php */
 .top-container {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 48px);
   background-image: url(exit.jpg);
   background-size: cover;
   color: whitesmoke;
@@ -18,23 +18,22 @@
 /* about.php */
 .about-container {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 48px);
   background-image: url(exit.jpg);
   background-size: cover;
   color: whitesmoke; }
-
-.about-message {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; }
-  .about-message h1 {
-    font-weight: normal;
-    margin-left: 52px;
-    margin-bottom: 36px; }
-  .about-message p {
-    margin-left: 52px;
-    margin-bottom: 16px; }
+  .about-container .about-message {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+    .about-container .about-message h1 {
+      font-weight: normal;
+      margin-left: 52px;
+      margin-bottom: 36px; }
+    .about-container .about-message p {
+      margin-left: 52px;
+      margin-bottom: 16px; }
 
 /*# sourceMappingURL=home.css.map */

@@ -1,5 +1,9 @@
 <?php $this->setLayoutVar('title', $user['name']) ?>
 
+<img src="/user_images/<?php echo $user['image_name']; ?>" alt="プロフィール画像">
+
+<h2><?php echo $this->escape($user['name']); ?></h2>
+
 <a href="<?php echo $base_url; ?>/users/<?php echo $user['id']; ?>/followings"><?php echo $followings; ?>フォロー</a>
 <a href="<?php echo $base_url; ?>/users/<?php echo $user['id']; ?>/followers"><?php echo $followers; ?>フォロワー</a>
 
@@ -27,8 +31,16 @@
   <?php endif; ?>
 <?php endif; ?>
 
-<div id="posts">
-  <?php foreach ($posts as $post) : ?>
-    <?php echo $this->render('posts/post', array('post' => $post)); ?>
-  <?php endforeach; ?>
+<div>
+    <ul>
+      <li><a href="#">行った</a></li>
+      <li><a href="#">行きたい</a></li>
+    </ul>
+
+    <section>
+      行った公演
+    </section>
+    <section>
+      行きたい公演
+    </section>
 </div>
