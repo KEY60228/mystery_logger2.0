@@ -66,6 +66,13 @@ class UsersController extends Controller {
       $errors[] = 'メールアドレスは既に使用されています';
     }
 
+    if (!strlen($password)) {
+      $errors[] = 'パスワードを入力してください';
+    } elseif (!preg_match('/^\w{4,40}$/', $password)) {
+      // とりあえずね
+      $errors[] = 'パスワードは半角英数ならびにアンダースコアを4〜40字で入力してください';
+    }
+    
     if (strlen($image_error) && $image_error != 'UPLOAD_ERR_OK') {
       $errors[] = 'アップロードエラーです';
     }
