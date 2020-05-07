@@ -31,16 +31,34 @@
   <?php endif; ?>
 <?php endif; ?>
 
-<div>
-    <ul>
-      <li><a href="#">行った</a></li>
-      <li><a href="#">行きたい</a></li>
+
+
+<?php /* done公演
+<a href="<?php echo $base_url; ?>/users/<?php echo $user['id']; ?>/wanna">行きたい</a>
+<?php foreach ($dones as $performance) : ?>
+  <?php echo $this->render('performances/performance', array('performance' => $performance)); ?>
+<?php endforeach; ?>
+*/ ?>
+
+<?php /* wanna公演
+<a href="<?php echo $base_url; ?>/users/<?php echo $user['id']; ?>/done">行った</a>
+<?php foreach ($wannas as $performance) : ?>
+  <?php echo $this->render('performances/performance', array('performance' => $performance)); ?>
+<?php endforeach; ?>
+*/ ?>
+
+
+
+<div class="container">
+    <ul class="menu">
+      <li><a href="#" class="active" data-id="done">行った</a></li>
+      <li><a href="#" data-id="wanna">行きたい</a></li>
     </ul>
 
-    <section>
+    <section class="content active" id="done">
       行った公演
     </section>
-    <section>
+    <section class="content" id="wanna">
       行きたい公演
     </section>
 </div>

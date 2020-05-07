@@ -6,12 +6,13 @@
     
     <form action="<?php echo $base_url; ?>/users/register" method="post" enctype="multipart/form-data" class="before-login-form">
       <input type="hidden" name="_token" value="<?php echo $this->escape($_token); ?>">
-    
+      
+      <div class="before-login-client-input">
+        
       <?php if (isset($errors) && count($errors) > 0): ?>
         <?php echo $this->render('errors', array('errors' => $errors)); ?>
       <?php endif; ?>
     
-      <div class="before-login-client-input">
         <div class="before-login-client-content">
           <p>ユーザー名(必須)</p>
           <input type="text" name="user_name" value="<?php echo $this->escape($user_name); ?>">

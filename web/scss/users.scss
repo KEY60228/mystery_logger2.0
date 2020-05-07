@@ -3,7 +3,7 @@
 /* users/signup.php, /users/signin.php */
 .background-img {
   width: 100%;
-  height: calc(100vh - #{$footer_height});
+  height: 100%;
   background-image: url(exit.jpg);
   background-size: cover;
   display: flex;
@@ -11,22 +11,22 @@
   
   .before-login-container {
     position: absolute;
-    top: calc(#{$header_height} + 50px);
-    height: 70%;
+    top: calc(#{$header_height} + 20px);
+    min-height: 70%;
     width: 60%;
     background-color: lightgray;
     box-shadow: 4px 4px gray;
     color: black;
 
     h2 {
-      margin-top: 20px;
+      margin-top: 12px;
       text-align: center;
       border-bottom: 1px solid gray;
-      padding-bottom: 20px;
+      padding-bottom: 12px;
     }
 
     .before-login-form {
-      margin-top: 20px;
+      margin-top: 10px;
 
       .before-login-client-input {
         margin: 0 auto;

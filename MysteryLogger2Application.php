@@ -49,7 +49,7 @@ class MysteryLogger2Application extends Application {
       '/users/signout' => array('controller' => 'users', 'action' => 'signout'),
       '/users/edit' => array('controller' => 'users', 'action' => 'edit'),
       '/users/update' => array('controller' => 'users', 'action' => 'update'),
-      '/users/:id' => array('controller' => 'users', 'action' => 'done'),
+      '/users/:id' => array('controller' => 'users', 'action' => 'show'),
       '/users/:id/followings' => array('controller' => 'users', 'action' => 'followings'),
       '/users/:id/followers' => array('controller' => 'users', 'action' => 'followers'),
       '/users/:id/done' => array('controller' => 'users', 'action' => 'done'),

@@ -1,26 +1,26 @@
 /* users/signup.php, /users/signin.php */
 .background-img {
   width: 100%;
-  height: calc(100vh - 48px);
+  height: 100%;
   background-image: url(exit.jpg);
   background-size: cover;
   display: flex;
   justify-content: center; }
   .background-img .before-login-container {
     position: absolute;
-    top: calc(64px + 50px);
-    height: 70%;
+    top: calc(64px + 20px);
+    min-height: 70%;
     width: 60%;
     background-color: lightgray;
     box-shadow: 4px 4px gray;
     color: black; }
     .background-img .before-login-container h2 {
-      margin-top: 20px;
+      margin-top: 12px;
       text-align: center;
       border-bottom: 1px solid gray;
-      padding-bottom: 20px; }
+      padding-bottom: 12px; }
     .background-img .before-login-container .before-login-form {
-      margin-top: 20px; }
+      margin-top: 10px; }
       .background-img .before-login-container .before-login-form .before-login-client-input {
         margin: 0 auto;
         display: flex;

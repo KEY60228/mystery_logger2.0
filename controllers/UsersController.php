@@ -118,40 +118,42 @@ class UsersController extends Controller {
    * postsテーブルから投稿情報とユーザー情報を抽出し、ページを表示する
    * ユーザーが存在しなかった場合は404ページに遷移させる
    */
-  // public function showAction($params) {
-  //   $user = $this->db_manager->get('Users')->fetchByUserId($params['id']);
+  public function showAction($params) {
+    $user = $this->db_manager->get('Users')->fetchByUserId($params['id']);
 
-  //   if (!$user) {
-  //     $this->forward404();
-  //   }
+    if (!$user) {
+      $this->forward404();
+    }
 
-    
-  //   $following = null;
-  //   $editable = null;
-    
-  //   if ($this->session->isAuthenticated()) {
-  //     $my = $this->session->get('user');
-  //     if ($my['id'] !== $user['id']) {
-  //       $following = $this->db_manager->get('Followings')->isFollowing($my['id'], $user['id']);
-  //     } else {
-  //       $editable = true;
-  //     }
-  //   }
-    
-  //   $posts = $this->db_manager->get('Posts')->fetchAllByUserId($user['id']);
-  //   $followings = $this->db_manager->get('Followings')->CountFollowingsByUserId($params['id']);
-  //   $followers = $this->db_manager->get('Followings')->CountFollowersByUserId($params['id']);
+    $following = null;
+    $editable = null;
 
-  //   return $this->render(array(
-  //     'user' => $user,
-  //     'posts' => $posts,
-  //     'following' => $following,
-  //     'editable' => $editable,
-  //     'followings' => $followings,
-  //     'followers' => $followers,
-  //     '_token' => $this->generateCsrfToken('users/show'),
-  //   ));
-  // }
+    if ($this->session->isAuthenticated()) {
+      $my = $this->session->get('user');
+      if ($my['id'] !== $user['id']) {
+        $following = $this->db_manager->get('Followings')->isFollowing($my['id'], $user['id']);
+      } else {
+        $editable = true;
+      }
+    }
+
+    $followings = $this->db_manager->get('Followings')->CountFollowingsByUserId($params['id']);
+    $followers = $this->db_manager->get('Followings')->CountFollowersByUserId($params['id']);
+
+    $dones = $this->db_manager->get('Performances')->fetchAllDonesByUserId($user['id']);
+    $wannas = $this->db_manager->get('Performances')->fetchAllWannasByUserId($user['id']);
+
+    return $this->render(array(
+      'user' => $user,
+      'following' => $following,
+      'editable' => $editable,
+      'followings' => $followings,
+      'followers' => $followers,
+      'dones' => $dones,
+      'wannas' => $wannas,
+      '_token' => $this->generateCsrfToken('users/show'),
+    ));
+  }
 
   /**
    * doneを表示させる

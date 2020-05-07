@@ -7,11 +7,12 @@
     <form action="<?php echo $base_url; ?>/users/authenticate" method="post" class="before-login-form">
       <input type="hidden" name="_token" value="<?php echo $this->escape($_token); ?>">
       
+      <div class="before-login-client-input">
+        
       <?php if (isset($errors) && count($errors) > 0) : ?>
         <?php echo $this->render('errors', array('errors' => $errors)); ?>
       <?php endif; ?>
 
-      <div class="before-login-client-input">
         <div class="before-login-client-content">
           <p>メールアドレス</p>
           <input type="text" name="email" value="<?php echo $this->escape($email); ?>">

@@ -1,7 +1,7 @@
 /* top.php */
 .top-container {
   width: 100%;
-  height: calc(100vh - 48px);
+  height: 100%;
   background-image: url(exit.jpg);
   background-size: cover;
   color: whitesmoke;
@@ -18,7 +18,7 @@
 /* about.php */
 .about-container {
   width: 100%;
-  height: calc(100vh - 48px);
+  height: 100%;
   background-image: url(exit.jpg);
   background-size: cover;
   color: whitesmoke; }

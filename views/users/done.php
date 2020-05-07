@@ -35,20 +35,3 @@
 <?php foreach ($dones as $performance) : ?>
   <?php echo $this->render('performances/performance', array('performance' => $performance)); ?>
 <?php endforeach; ?>
-
-<!-- CSS実装時に対応 -->
-<?php /*
-<div class="container">
-    <ul class="menu">
-      <li><a href="#" class="active" data-id="done">行った</a></li>
-      <li><a href="#" data-id="wanna">行きたい</a></li>
-    </ul>
-
-    <section class="content active" id="done">
-      行った公演
-    </section>
-    <section class="content" id="wanna">
-      行きたい公演
-    </section>
-</div>
-*/ ?>
