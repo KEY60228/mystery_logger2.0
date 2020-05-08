@@ -9,14 +9,14 @@
       e.preventDefault();
 
       menuItems.forEach(item => {
-        item.classList.remove('done-wanna-active');
+        item.classList.remove('done-wanna-menu-active');
       });
-      clickedItem.classList.add('done-wanna-active');
+      clickedItem.classList.add('done-wanna-menu-active');
 
       contents.forEach(content => {
-        content.classList.remove('done-wanna-active');
+        content.classList.remove('done-wanna-contents-active');
       });
-      document.getElementById(clickedItem.dataset.id).classList.add('done-wanna-active');
+      document.getElementById(clickedItem.dataset.id).classList.add('done-wanna-contents-active');
     });
   });
 }
