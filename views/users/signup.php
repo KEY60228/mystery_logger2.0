@@ -1,6 +1,6 @@
 <?php $this->setLayoutVar('title', '新規ユーザー登録') ?>
 
-<div class="background-img">
+<div class="before-login-wrapper">
   <div class="before-login-container">
     <h2 class="before-login-subtitle">新規ユーザー登録</h2>
     

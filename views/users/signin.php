@@ -1,6 +1,6 @@
 <?php $this->setLayoutVar('title', 'ログイン'); ?>
 
-<div class="background-img">
+<div class="before-login-wrapper">
   <div class="before-login-container">
     <h2 class="before-login-subtitle">ログイン</h2>
 

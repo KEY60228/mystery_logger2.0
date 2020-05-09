@@ -1,19 +1,15 @@
 @import "variables";
 
 /* users/signup.php, /users/signin.php */
-.background-img {
+.before-login-wrapper {
   width: 100%;
-  height: calc(100vh - #{$header_height} - #{footer_height});
-  box-sizing: border-box;
-  background-image: url(exit.jpg);
-  background-size: cover;
+  min-height: calc(100vh - #{$header_height} - #{$footer_height});
+  background-color: azure;
   display: flex;
+  align-items: center;
   justify-content: center;
   
   .before-login-container {
-    position: absolute;
-    top: calc(#{$header_height} + 20px);
-    min-height: 70%;
     width: 60%;
     background-color: lightgray;
     box-shadow: 4px 4px gray;
@@ -56,10 +52,7 @@
         .before-login-client-img{
           display: flex;
           align-items: center;
-
-          input {
-            margin-left: 16px;
-          }
+          justify-content: space-between;
         }
 
         .before-login-button {
@@ -91,7 +84,7 @@
 .user-show-container {
   width: 100%;
   min-height: 100%;
-  background-color: lightgray;  
+  background-color: azure;  
 
   display: flex;
   flex-direction: column;
@@ -103,8 +96,8 @@
     align-items: center;
 
     .user-image {
-    border-radius: 50%;
-    margin-top: 20px;
+      border-radius: 50%;
+      margin-top: 20px;
     }
 
     h2 {
@@ -176,6 +169,7 @@
     .done-wanna-contents-active {
       width: 660px;
       display: flex;
+      flex-wrap: wrap;
     }
     
   }

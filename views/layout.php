@@ -38,9 +38,6 @@
           <li>
             <a href="<?php echo $base_url; ?>/users/signup">新規登録</a>
           </li>
-          <li>
-            <a href="<?php echo $base_url; ?>/about">なぞログ #とは</a>
-          </li>
         <?php endif; ?>
       </ul>
     </nav>

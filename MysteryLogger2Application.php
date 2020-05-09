@@ -31,8 +31,7 @@ class MysteryLogger2Application extends Application {
   protected function registerRoutes() {
     // とりあえず動的アクションは保留
     return array(
-      '/' => array('controller' => 'home', 'action' => 'top'),
-      '/about' => array('controller' => 'home', 'action' => 'about'),
+      '/' => array('controller' => 'performances', 'action' => 'index'),
 
       '/posts' => array('controller' => 'posts', 'action' => 'index'),
       '/posts/new' => array('controller' => 'posts', 'action' => 'new'),

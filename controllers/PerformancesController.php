@@ -2,7 +2,7 @@
 
 class PerformancesController extends Controller {
   // ログインが必要なアクションを指定する
-  protected $auth_actions = array('index', 'show');
+  protected $auth_actions = array('show', 'done', 'undone', 'interested', 'disinterested');
 
   /**
    * 公演一覧ページを表示する
@@ -165,15 +165,5 @@ class PerformancesController extends Controller {
     }
 
     return $this->redirect('/performances/' . $performance_id);
-  }
-
-    /**
-   * イメージファイルの名前を受け取って返すアクション
-   */
-  public function imageAction($params) {
-    $img_file = $this->application->getPerformanceImagesDir() . '/' . $params['image'];
-    $img_info = getimagesize($img_file);
-    header('Content-Type: ' . $img_info['mime']);
-    readfile($img_file);  
   }
 }

@@ -1,15 +1,55 @@
 @import "variables";
 
+/* performances/index.php, performances/show.php */
+.performances-wrapper {
+  width: 100%;
+  min-height: calc(100vh - #{$header_height} - #{$footer_height});
+  background-color: azure;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    margin: 12px auto;
+  }
+
+  .performances {
+    width: 660px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .performance-done-wanna {
+    width: 240px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+}
+
+
+/* performances/performance.php */
 .performance {
   .performance-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left:20px;
+    margin-left: 20px;
+    margin-bottom: 12px;
 
     img {
       height: 300px;
       width: 200px;
+    }
+
+    a {
+      width: 200px;
+      text-align: center;
     }
   }
 }

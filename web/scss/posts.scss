@@ -1,0 +1,29 @@
+@import "variables";
+
+/* posts/post.php */
+.img-and-post {
+  width: 600px;
+  background-color: whitesmoke;
+  display: flex;
+  margin-bottom: 12px;
+  
+  img {
+    border-radius: 50%;
+    margin: 12px;
+  }
+
+  .post-content {
+    display: flex;
+    flex-direction: column;
+
+    a {
+      margin-top: 4px;
+      color: black;
+    }
+
+    p {
+      margin-top: 12px;
+      margin-bottom:12px;
+    }
+  }
+}

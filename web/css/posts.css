@@ -1,3 +1,20 @@
-
+/* posts/post.php */
+.img-and-post {
+  width: 600px;
+  background-color: whitesmoke;
+  display: flex;
+  margin-bottom: 12px; }
+  .img-and-post img {
+    border-radius: 50%;
+    margin: 12px; }
+  .img-and-post .post-content {
+    display: flex;
+    flex-direction: column; }
+    .img-and-post .post-content a {
+      margin-top: 4px;
+      color: black; }
+    .img-and-post .post-content p {
+      margin-top: 12px;
+      margin-bottom: 12px; }
 
 /*# sourceMappingURL=posts.css.map */

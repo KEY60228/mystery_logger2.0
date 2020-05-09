@@ -1,3 +1,4 @@
+<!-- 不要だけどとりあえず残しとく -->
 <?php $this->setLayoutVar('title', 'なぞログとは') ?>
 
 <div class="about-container">

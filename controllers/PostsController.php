@@ -2,7 +2,7 @@
 
 class PostsController extends Controller {
   // ログインが必要なアクションを指定する
-  protected $auth_actions = array('new', 'create', 'show');
+  protected $auth_actions = array('new', 'create', 'show', 'index');
   // 権限が必要なアクションを指定する
   protected $right_actions = array('edit', 'update', 'destroy');
 

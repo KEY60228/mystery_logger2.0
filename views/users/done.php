@@ -1,3 +1,4 @@
+<!-- 不要だけどとりあえず残しとく -->
 <?php $this->setLayoutVar('title', $user['name']) ?>
 
 <img src="/user_images/<?php echo $user['image_name']; ?>" alt="プロフィール画像">

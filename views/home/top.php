@@ -1,3 +1,4 @@
+<!-- 不要だけどとりあえず残しとく -->
 <?php $this->setLayoutVar('title', 'トップページ') ?>
 
 <div class="top-container">

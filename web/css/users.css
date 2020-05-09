@@ -1,37 +1,33 @@
 /* users/signup.php, /users/signin.php */
-.background-img {
+.before-login-wrapper {
   width: 100%;
-  height: calc(100vh - 64px - footer_height);
-  box-sizing: border-box;
-  background-image: url(exit.jpg);
-  background-size: cover;
+  min-height: calc(100vh - 64px - 48px);
+  background-color: azure;
   display: flex;
+  align-items: center;
   justify-content: center; }
-  .background-img .before-login-container {
-    position: absolute;
-    top: calc(64px + 20px);
-    min-height: 70%;
+  .before-login-wrapper .before-login-container {
     width: 60%;
     background-color: lightgray;
     box-shadow: 4px 4px gray;
     color: black; }
-    .background-img .before-login-container h2 {
+    .before-login-wrapper .before-login-container h2 {
       margin-top: 12px;
       text-align: center;
       border-bottom: 1px solid gray;
       padding-bottom: 12px; }
-    .background-img .before-login-container .before-login-form {
+    .before-login-wrapper .before-login-container .before-login-form {
       margin-top: 10px; }
-      .background-img .before-login-container .before-login-form .before-login-client-input {
+      .before-login-wrapper .before-login-container .before-login-form .before-login-client-input {
         margin: 0 auto;
         display: flex;
         flex-direction: column;
         width: 85%; }
-        .background-img .before-login-container .before-login-form .before-login-client-input .before-login-client-content {
+        .before-login-wrapper .before-login-container .before-login-form .before-login-client-input .before-login-client-content {
           margin-bottom: 12px; }
-          .background-img .before-login-container .before-login-form .before-login-client-input .before-login-client-content p {
+          .before-login-wrapper .before-login-container .before-login-form .before-login-client-input .before-login-client-content p {
             margin-bottom: 4px; }
-          .background-img .before-login-container .before-login-form .before-login-client-input .before-login-client-content input {
+          .before-login-wrapper .before-login-container .before-login-form .before-login-client-input .before-login-client-content input {
             width: 100%;
             padding: 8px;
             font-size: 12px;
@@ -39,12 +35,11 @@
             border: 2px solid gray;
             box-sizing: border-box;
             box-shadow: 4px 4px gray; }
-        .background-img .before-login-container .before-login-form .before-login-client-input .before-login-client-img {
+        .before-login-wrapper .before-login-container .before-login-form .before-login-client-input .before-login-client-img {
           display: flex;
-          align-items: center; }
-          .background-img .before-login-container .before-login-form .before-login-client-input .before-login-client-img input {
-            margin-left: 16px; }
-        .background-img .before-login-container .before-login-form .before-login-client-input .before-login-button {
+          align-items: center;
+          justify-content: space-between; }
+        .before-login-wrapper .before-login-container .before-login-form .before-login-client-input .before-login-button {
           display: inline-block;
           width: 50%;
           margin: 20px auto;
@@ -54,7 +49,7 @@
           font-size: 12px;
           box-shadow: 4px 4px gray;
           border: 2px solid black; }
-          .background-img .before-login-container .before-login-form .before-login-client-input .before-login-button:hover {
+          .before-login-wrapper .before-login-container .before-login-form .before-login-client-input .before-login-button:hover {
             box-shadow: none;
             background-color: whitesmoke;
             color: dodgerblue; }
@@ -63,7 +58,7 @@
 .user-show-container {
   width: 100%;
   min-height: 100%;
-  background-color: lightgray;
+  background-color: azure;
   display: flex;
   flex-direction: column;
   align-items: center; }
@@ -119,6 +114,7 @@
       display: none; }
     .user-show-container .done-wanna-tab .done-wanna-contents-active {
       width: 660px;
-      display: flex; }
+      display: flex;
+      flex-wrap: wrap; }
 
 /*# sourceMappingURL=users.css.map */
