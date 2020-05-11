@@ -1,5 +1,6 @@
 'use strict'
 
+// users/show.phpのdone-wannaのタブの切り替え用
 {
   const menuItems: any = document.querySelectorAll('.done-wanna-menu a');
   const contents: any = document.querySelectorAll('.done-wanna-contents');
@@ -20,3 +21,10 @@
     });
   });
 }
+
+
+/* posts/new.php, posts/edit.phpの文字数カウント用 */
+function countLength(text: string): any {
+  document.getElementById("js-count-characters").innerHTML = text.length + "文字";
+}
+

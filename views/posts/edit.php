@@ -12,11 +12,10 @@
       <?php endif; ?>
     
       <h3><?php echo $performance['name'] ?></h3>
-      <textarea name="contents" rows="2" cols="60"><?php echo $this->escape($post['contents']); ?></textarea>
+      <textarea name="contents" onKeyUp="countLength(value);"><?php echo $this->escape($post['contents']); ?></textarea>
+      <p id="js-count-characters"><?php echo mb_strlen($this->escape($post['contents']), 'UTF-8') ?>文字</p>
     
-      <p>
-        <input type="submit" value="保存">
-      </p>
+      <input type="submit" value="保存" class="posts-edit-button">
     </form>
   </div>
 </div>

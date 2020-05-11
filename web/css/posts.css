@@ -7,6 +7,8 @@
   align-items: center; }
   .posts-index-wrapper h2 {
     margin: 12px auto; }
+  .posts-index-wrapper h3 {
+    color: black; }
 
 /* posts/new.php */
 .posts-new-wrapper {
@@ -66,7 +68,22 @@
         font-size: 16px; }
       .posts-new-wrapper .posts-new-container .posts-new-form p {
         margin-left: auto;
-        margin-right: 0; }
+        margin-right: 0;
+        margin-bottom: 12px; }
+      .posts-new-wrapper .posts-new-container .posts-new-form .posts-new-button {
+        display: inline-block;
+        width: 50%;
+        margin: 20px auto;
+        padding: 8px;
+        background-color: dodgerblue;
+        color: whitesmoke;
+        font-size: 12px;
+        box-shadow: 4px 4px gray;
+        border: 2px solid black; }
+        .posts-new-wrapper .posts-new-container .posts-new-form .posts-new-button:hover {
+          box-shadow: none;
+          background-color: whitesmoke;
+          color: dodgerblue; }
 
 /* posts/edit.php */
 .posts-edit-wrapper {
@@ -102,6 +119,20 @@
       .posts-edit-wrapper .posts-edit-container .posts-edit-form p {
         margin-left: auto;
         margin-right: 0; }
+      .posts-edit-wrapper .posts-edit-container .posts-edit-form .posts-edit-button {
+        display: inline-block;
+        width: 50%;
+        margin: 20px auto;
+        padding: 8px;
+        background-color: dodgerblue;
+        color: whitesmoke;
+        font-size: 12px;
+        box-shadow: 4px 4px gray;
+        border: 2px solid black; }
+        .posts-edit-wrapper .posts-edit-container .posts-edit-form .posts-edit-button:hover {
+          box-shadow: none;
+          background-color: whitesmoke;
+          color: dodgerblue; }
 
 /* posts/post.php */
 .img-and-post {

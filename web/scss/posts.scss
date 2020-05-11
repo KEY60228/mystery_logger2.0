@@ -11,6 +11,10 @@
   h2 {
     margin: 12px auto;
   }
+
+  h3 {
+    color: black
+  }
 }
 
 /* posts/new.php */
@@ -88,6 +92,25 @@
       p {
         margin-left: auto;
         margin-right: 0;
+        margin-bottom: 12px;
+      }
+
+      .posts-new-button {
+        display: inline-block;
+        width: 50%;
+        margin: 20px auto;
+        padding: 8px;
+        background-color: dodgerblue;
+        color: whitesmoke;
+        font-size: 12px;
+        box-shadow: 4px 4px gray;
+        border: 2px solid black; 
+
+        &:hover {
+          box-shadow: none;
+          background-color: whitesmoke;
+          color: dodgerblue;
+        }
       }
     }
   }
@@ -137,6 +160,24 @@
       p {
         margin-left: auto;
         margin-right: 0;
+      }
+
+      .posts-edit-button {
+        display: inline-block;
+        width: 50%;
+        margin: 20px auto;
+        padding: 8px;
+        background-color: dodgerblue;
+        color: whitesmoke;
+        font-size: 12px;
+        box-shadow: 4px 4px gray;
+        border: 2px solid black; 
+
+        &:hover {
+          box-shadow: none;
+          background-color: whitesmoke;
+          color: dodgerblue;
+        }
       }
     }
   }

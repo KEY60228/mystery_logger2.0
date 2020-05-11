@@ -270,7 +270,7 @@ class UsersController extends Controller {
     $user = $this->session->get('user');
     
     $followings_repository = $this->db_manager->get('Followings');
-    if ($user['id'] !== $following_user['id'] && !$followings_repository->isFollowing($user['id'], $follow_user['id'])) {
+    if ($user['id'] !== $follow_user['id'] && !$followings_repository->isFollowing($user['id'], $follow_user['id'])) {
       $followings_repository->insert($user['id'], $follow_user['id']);
     }
 

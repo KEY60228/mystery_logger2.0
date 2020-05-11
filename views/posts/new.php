@@ -17,11 +17,11 @@
         <?php echo $this->render('errors', array('errors' => $errors)); ?>
       <?php endif; ?>
   
-      <textarea name="contents" rows="2" cols="60"><?php echo $this->escape($contents); ?></textarea>
-  
-      <p>
-        <input type="submit" value="投稿">
-      </p>
+      <textarea name="contents" onKeyUp="countLength(value);"><?php echo $this->escape($contents); ?></textarea>
+      <p id="js-count-characters">0文字</p>
+
+      <input type="submit" value="投稿" class="posts-new-button">
+
     </form>
   </div>
 </div>
