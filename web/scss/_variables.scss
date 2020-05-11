@@ -1,2 +1,3 @@
 $header_height: 64px;
 $footer_height: 48px;
+$wrapper_height: calc(100vh - #{$header_height} - #{$footer_height});

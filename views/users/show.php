@@ -1,6 +1,6 @@
 <?php $this->setLayoutVar('title', $user['name']) ?>
 
-<div class="user-show-container">
+<div class="user-show-wrapper">
   <div class="user-information">
     <img src="/user_images/<?php echo $user['image_name']; ?>" alt="プロフィール画像" class="user-image">
 

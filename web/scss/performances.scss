@@ -3,7 +3,7 @@
 /* performances/index.php, performances/show.php */
 .performances-wrapper {
   width: 100%;
-  min-height: calc(100vh - #{$header_height} - #{$footer_height});
+  min-height: $wrapper_height;
   background-color: azure;
   display: flex;
   flex-direction: column;
@@ -50,6 +50,7 @@
     a {
       width: 200px;
       text-align: center;
+      color: black;
     }
   }
 }

@@ -1,13 +1,159 @@
 @import "variables";
 
+/* posts/index.php */
+.posts-index-wrapper {
+  min-height: $wrapper_height;
+  background-color: azure;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    margin: 12px auto;
+  }
+}
+
+/* posts/new.php */
+.posts-new-wrapper {
+  background-color: azure;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* posts/show.php */
+.posts-show-wrapper {
+  min-height: $wrapper_height;
+  box-sizing: border-box;
+  background-color: azure;
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+
+  .posts-edit {
+    height: 172px;
+    display: flex;
+
+    a {
+      display: inline-block;
+      margin-top: auto;
+      margin-bottom: 0;
+      margin-right: 12px;
+      color: black;
+    }
+  }
+}
+
+/* posts/new.php */
+.posts-new-wrapper {
+  min-height: $wrapper_height;
+  box-sizing: border-box;
+  padding-top: 12px;
+  background-color: azure;
+
+  
+  .posts-new-container {
+    width: 60%;
+    box-sizing: border-box;
+    padding: 12px;
+    background-color: lightgray;
+    box-shadow: 4px 4px gray;
+    color: black;
+    display: flex;
+    flex-direction: column;
+
+    h2 {
+      text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid black;
+    }
+
+    .posts-new-form {
+      display: flex;
+      flex-direction: column;
+      margin-top: 12px;
+
+      select {
+        height: 32px;
+        margin-bottom: 12px;
+        font-size: 16px;
+      }
+
+      textarea {
+        min-height: 150px;
+        margin-bottom: 12px;
+        font-size: 16px;
+      }
+
+      p {
+        margin-left: auto;
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+
+/* posts/edit.php */
+.posts-edit-wrapper {
+  min-height: $wrapper_height;
+  box-sizing: border-box;
+  padding-top: 12px;
+  background-color: azure;
+  
+  .posts-edit-container {
+    margin: 0 auto;
+    width: 60%;
+    box-sizing: border-box;
+    padding: 12px;
+    background-color: lightgray;
+    box-shadow: 4px 4px gray;
+    color: black;
+    display: flex;
+    flex-direction: column;
+
+    h2 {
+      text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid black;
+    }
+
+    .posts-edit-form {
+      display: flex;
+      flex-direction: column;
+      margin-top: 12px;
+
+      h3 {
+        margin-left: 12px;
+        margin-bottom: 12px;
+      }
+
+      textarea {
+        min-height: 150px;
+        margin-bottom: 12px;
+        font-size: 16px;
+      }
+
+      p {
+        margin-left: auto;
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+
+
 /* posts/post.php */
 .img-and-post {
   width: 600px;
-  background-color: whitesmoke;
   display: flex;
   margin-bottom: 12px;
   
   img {
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     margin: 12px;
   }

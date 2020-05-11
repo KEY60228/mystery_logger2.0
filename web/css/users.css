@@ -55,64 +55,64 @@
             color: dodgerblue; }
 
 /* users/show.php */
-.user-show-container {
+.user-show-wrapper {
   width: 100%;
-  min-height: 100%;
+  min-height: calc(100vh - 64px - 48px);
   background-color: azure;
   display: flex;
   flex-direction: column;
   align-items: center; }
-  .user-show-container .user-information {
+  .user-show-wrapper .user-information {
     display: flex;
     flex-direction: column;
     align-items: center; }
-    .user-show-container .user-information .user-image {
+    .user-show-wrapper .user-information .user-image {
       border-radius: 50%;
       margin-top: 20px; }
-    .user-show-container .user-information h2 {
+    .user-show-wrapper .user-information h2 {
       font-weight: normal;
       font-size: 40px; }
-    .user-show-container .user-information .follows {
+    .user-show-wrapper .user-information .follows {
       margin-top: 8px;
       display: flex;
       justify-content: space-between; }
-      .user-show-container .user-information .follows a {
+      .user-show-wrapper .user-information .follows a {
         display: inline-block;
         width: 100px;
         text-align: center;
         color: black; }
-    .user-show-container .user-information .follow-or-edit {
+    .user-show-wrapper .user-information .follow-or-edit {
       margin-top: 8px; }
-      .user-show-container .user-information .follow-or-edit a {
+      .user-show-wrapper .user-information .follow-or-edit a {
         color: black; }
-  .user-show-container .done-wanna-tab {
+  .user-show-wrapper .done-wanna-tab {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 8px; }
-    .user-show-container .done-wanna-tab .done-wanna-menu {
+    .user-show-wrapper .done-wanna-tab .done-wanna-menu {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
       width: 250px;
       margin-bottom: 16px; }
-      .user-show-container .done-wanna-tab .done-wanna-menu li {
+      .user-show-wrapper .done-wanna-tab .done-wanna-menu li {
         height: 32px;
         line-height: 32px; }
-        .user-show-container .done-wanna-tab .done-wanna-menu li a {
+        .user-show-wrapper .done-wanna-tab .done-wanna-menu li a {
           display: inline-block;
           width: 120px;
           color: black;
           text-align: center; }
-      .user-show-container .done-wanna-tab .done-wanna-menu .done-wanna-menu-active {
+      .user-show-wrapper .done-wanna-tab .done-wanna-menu .done-wanna-menu-active {
         background-color: seagreen;
         color: whitesmoke; }
-    .user-show-container .done-wanna-tab .done-wanna-contents {
+    .user-show-wrapper .done-wanna-tab .done-wanna-contents {
       display: none; }
-    .user-show-container .done-wanna-tab .done-wanna-contents-active {
+    .user-show-wrapper .done-wanna-tab .done-wanna-contents-active {
       width: 660px;
       display: flex;
       flex-wrap: wrap; }
