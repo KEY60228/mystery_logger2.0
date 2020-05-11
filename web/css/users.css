@@ -117,4 +117,80 @@
       display: flex;
       flex-wrap: wrap; }
 
+/* users/edit.php */
+.users-edit-wrapper {
+  min-height: calc(100vh - 64px - 48px);
+  box-sizing: border-box;
+  padding-top: 12px;
+  background-color: azure; }
+  .users-edit-wrapper .users-edit-container {
+    margin: 0 auto;
+    width: 60%;
+    box-sizing: border-box;
+    padding: 12px;
+    background-color: lightgray;
+    box-shadow: 4px 4px gray;
+    color: black;
+    display: flex;
+    flex-direction: column; }
+    .users-edit-wrapper .users-edit-container h2 {
+      text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid black; }
+    .users-edit-wrapper .users-edit-container .users-edit-form {
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      width: 85%; }
+      .users-edit-wrapper .users-edit-container .users-edit-form .users-edit-content {
+        margin-bottom: 12px; }
+        .users-edit-wrapper .users-edit-container .users-edit-form .users-edit-content p {
+          margin-bottom: 4px; }
+        .users-edit-wrapper .users-edit-container .users-edit-form .users-edit-content input {
+          width: 100%;
+          padding: 8px;
+          font-size: 12px;
+          border-radius: 3px;
+          border: 2px solid gray;
+          box-sizing: border-box;
+          box-shadow: 4px 4px gray; }
+      .users-edit-wrapper .users-edit-container .users-edit-form .users-edit-img {
+        display: flex;
+        align-items: center;
+        justify-content: space-between; }
+      .users-edit-wrapper .users-edit-container .users-edit-form .users-edit-button {
+        display: inline-block;
+        width: 50%;
+        margin: 20px auto;
+        padding: 8px;
+        background-color: dodgerblue;
+        color: whitesmoke;
+        font-size: 12px;
+        box-shadow: 4px 4px gray;
+        border: 2px solid black; }
+        .users-edit-wrapper .users-edit-container .users-edit-form .users-edit-button:hover {
+          box-shadow: none;
+          background-color: whitesmoke;
+          color: dodgerblue; }
+
+/* users/followers.php users/followings.php */
+.follows-wrapper {
+  min-height: calc(100vh - 64px - 48px);
+  box-sizing: border-box;
+  padding: 12px 5%;
+  background-color: azure;
+  display: flex;
+  flex-wrap: wrap; }
+  .follows-wrapper .follows-container {
+    display: flex;
+    flex-direction: column;
+    margin-right: 12px;
+    height: 150px; }
+    .follows-wrapper .follows-container img {
+      height: 150px;
+      width: 150px;
+      border-radius: 50%; }
+    .follows-wrapper .follows-container a {
+      color: black; }
+
 /*# sourceMappingURL=users.css.map */
