@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * 抽象クラス Application
+ */
 abstract class Application {
   protected $debug = false;
   protected $request;
@@ -11,7 +14,9 @@ abstract class Application {
   protected $deny_action = array();
 
   /**
-   * デバッグを行うか否かの変数を受け取り、各メソッドに渡すコンストラクタ
+   * コンストラクタ
+   * 
+   * @param boolean $debug (default) false
    */
   public function __construct($debug = false) {
     $this->setDebugMode($debug);
@@ -20,7 +25,9 @@ abstract class Application {
   }
 
   /**
-   * デバッグを行うか否かの変数を受け取り、エラー表示処理を切り替える
+   * デバッグモードを設定する
+   * 
+   * @param boolean $debug
    */
   public function setDebugMode($debug) {
     if ($debug) {
@@ -35,7 +42,6 @@ abstract class Application {
 
   /**
    * 各クラスの初期化を行う
-   * Routerクラスにはルーティング定義配列を渡す
    */
   protected function initialize() {
     $this->request = new Request();
@@ -46,7 +52,7 @@ abstract class Application {
   }
 
   /**
-   * 個別のアプリケーションの設定をする
+   * 個別のアプリケーションの設定を行う
    */
   protected function configure() {
 
@@ -64,6 +70,8 @@ abstract class Application {
 
   /**
    * デバッグモードか否かを確認する
+   * 
+   * @return boolean
    */
   public function isDebugMode() {
     return $this->debug;
@@ -71,6 +79,8 @@ abstract class Application {
 
   /**
    * Requestインスタンスを返す
+   * 
+   * @return Request
    */
   public function getRequest() {
     return $this->request;
@@ -78,6 +88,8 @@ abstract class Application {
 
   /**
    * Responseインスタンスを返す
+   * 
+   * @return Response
    */
   public function getResponse() {
     return $this->response;
@@ -85,6 +97,8 @@ abstract class Application {
 
   /**
    * Sessionインスタンスを返す
+   * 
+   * @return Session
    */
   public function getSession() {
     return $this->session;
@@ -92,6 +106,8 @@ abstract class Application {
 
   /**
    * DbManagerインスタンスを返す
+   * 
+   * @return DbManager
    */
   public function getDbManager() {
     return $this->db_manager;
@@ -99,6 +115,8 @@ abstract class Application {
 
   /**
    * contollersディレクトリまでのパスを返す
+   * 
+   * @return string
    */
   public function getControllerDir() {
     return $this->getRootDir() . '/controllers';
@@ -106,6 +124,8 @@ abstract class Application {
 
   /**
    * viewsディレクトリまでのパスを返す
+   * 
+   * @return string
    */
   public function getViewDir() {
     return $this->getRootDir() . '/views';
@@ -113,6 +133,8 @@ abstract class Application {
   
   /**
    * modelsディレクトリまでのパスを返す
+   * 
+   * @return string
    */
   public function getModelDir() {
     return $this->getRootDir() . '/models';
@@ -120,14 +142,22 @@ abstract class Application {
  
   /**
    * webディレクトリまでのパスを返す
+   * 
+   * @return string
    */
   public function getWebDir() {
     return $this->getRootDir() . '/web';
   }
 
   /**
-   * PATH_INFOとルーティング定義配列のマッチングを行い、マッチしなければ例外を返す
-   * マッチしたらrunActionメソッドを呼び出し、Responseクラスのsendメソッドを呼び出す
+   * アプリケーションの実行
+   * 
+   * PATH_INFOとルーティング定義配列のマッチングを行い、
+   * runAction()を呼び出した後、Response::send()を呼び出す
+   * 
+   * @throws HttpNotFoundException ルートがマッチしない場合
+   * @throws UnauthorizedActionException ログインが必要なページかつログインしていない場合
+   * @throws NoRightActionException アクセス権限がない場合
    */
   public function run() {
     try {
@@ -156,10 +186,16 @@ abstract class Application {
   }
 
   /**
-   * コントローラーの名前、アクションの名前、マッチした配列を受け取り、
-   * findControllerメソッドでコントローラーを探す
-   * コントローラーが見つからなかった場合は例外を返し、見つかった場合は
-   * 該当のControllerクラスのrunメソッドを実行し、ResponseクラスのsetContentメソッドを呼び出す
+   * アプリケーションの実行プロセス
+   * 
+   * 指定されたコントローラ名でfindController()を実行し、
+   * 該当のコントローラクラスのrun()を実行後、Response::setContent()を実行する
+   * 
+   * @param string $controller_name
+   * @param string $action
+   * @param array $params マッチした配列 (default) array()
+   * 
+   * @throws HttpNotFoundException 指定されたコントローラが見つからない場合
    */
   public function runAction($controller_name, $action, $params = array()) {
     $controller_class = ucfirst($controller_name) . 'Controller';
@@ -174,9 +210,13 @@ abstract class Application {
   }
 
   /**
-   * コントローラー名を受け取り、該当のコントローラーファイル、クラスが見つかった場合は
-   * 該当のControllerインスタンスを返す
+   * 指定されたコントローラ名のControllerインスタンスを返す
+   * 
+   * コントローラー名を受け取り、該当のControllerインスタンスを返す
    * ファイル、クラスが見つからなかった場合はfalseを返す
+   * 
+   * @param string $controller_class
+   * @return Controller(Application)|false
    */
   protected function findController($controller_class) {
     if (!class_exists($controller_class)) {
@@ -196,8 +236,12 @@ abstract class Application {
   }
 
   /**
+   * 404ページを表示する
+   * 
    * 例外を受け取り、404ページを表示させる
    * デバッグモードならエラーメッセージを表示させる
+   * 
+   * @param Exception $e
    */
   protected function render404page($e) {
     $this->response->setStatusCode(404, 'Not Found');
