@@ -3,7 +3,7 @@
 class UsersController extends Controller {
   // ログインが必要なアクションを指定する
   protected $auth_actions = array('show', 'signout', 'follow', 'edit', 'update', 'unfollow', 'followings', 'followers');
-  
+
   /**
    * CSRFトークンを発行し、ビューファイルに渡したものをレンダリングする
    */
