@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * オートロード対応クラス ClassLoader
+ */
 class ClassLoader {
   protected $dirs;
 
