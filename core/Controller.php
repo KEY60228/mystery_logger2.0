@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * コントローラクラス Controller
+ */
 abstract class Controller {
   protected $controller_name;
   protected $action_name;
