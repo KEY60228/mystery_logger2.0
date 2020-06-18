@@ -1,9 +1,15 @@
 <?php
 
+/**
+ * クライアントからのリクエスト管理クラス Request
+ */
 class Request {
   /**
    * HTTPメソッドがPOSTかどうか判定する
+   * 
    * POSTであればtrueを返し、それ以外であればfalseを返す
+   * 
+   * @return boolean
    */
   public function isPost() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -13,8 +19,14 @@ class Request {
   }
 
   /**
+   * GETパラメータを取得する
+   * 
    * 任意の値$nameを受け取り、$_GET[$name]の値を返す
    * $_GET[$name]が存在しない場合は$defaultを返す
+   * 
+   * @param string $name
+   * @param mixed $default
+   * @return mixed
    */
   public function getGet ($name, $default = null) {
     if (isset($_GET[$name])) {
@@ -24,8 +36,14 @@ class Request {
   }
 
   /**
+   * POSTパラメータを取得する
+   * 
    * 任意の値$nameを受け取り、$_POST[$name]の値を返す
    * $_POST[$name]が存在しない場合は$defaultを返す
+   * 
+   * @param string $name
+   * @param mixed $default
+   * @return mixed
    */
   public function getPost($name, $default = null) {
     if (isset($_POST[$name])) {
@@ -35,8 +53,12 @@ class Request {
   }
 
   /**
+   * ホスト名を取得する
+   * 
    * HTTPリクエストヘッダに含まれるサーバーのホスト名を返す
    * 含まれていない場合はApache側に設定されたホスト名を返す
+   * 
+   * @return string
    */
   public function getHost() {
     if (!empty($_SERVER['HTTP_HOST'])) {
@@ -46,7 +68,11 @@ class Request {
   }
 
   /**
+   * 通信がSSLかどうか判定する
+   * 
    * HTTPSでのアクセスならtrueを、そうでなければfalseを返す
+   * 
+   * @return boolean
    */
   public function isSsl() {
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
@@ -56,15 +82,23 @@ class Request {
   }
 
   /**
+   * リクエストURIを取得する
+   * 
    * リクエストされたURLのうち、ホスト部分以降の値を返す
+   * 
+   * @return string
    */
   public function getRequestUri() {
     return $_SERVER['REQUEST_URI'];
   }
 
   /**
-   * リクエストされたURLのうち、ホスト部分以降フロントコントローラーまでの値(ベースURL)を返す
+   * ベースURLを取得する
+   * 
+   * リクエストされたURLのうち、ホスト部分以降フロントコントローラまでの値を返す
    * フロントコントローラーも含めてリクエストされている場合はフロントコントローラーの値も含む
+   * 
+   * @return string
    */
   public function getBaseUrl() {
     $script_name = $_SERVER['SCRIPT_NAME'];
@@ -79,8 +113,12 @@ class Request {
   }
 
   /**
-   * リクエストされたURLのうち、ベースURLより後ろの値(PATH_INFO)を返す
+   * PATH_INFOを取得する
+   * 
+   * リクエストされたURLのうち、ベースURLより後ろの値を返す
    * GETパラメータの値は含まない
+   * 
+   * @return string
    */
   public function getPathInfo() {
     $base_url = $this->getBaseUrl();
@@ -95,8 +133,14 @@ class Request {
   }
 
   /**
-   * 画像アップロード用に追加
+   * Fileパラメータを取得する
+   * 
+   * 画像アップロード用に追加 (なぞログ)
    * 識別子$nameを受け取り、あれば$_FILEを返しなければ$defaultを返す
+   * 
+   * @param string $name
+   * @param mixed $default
+   * @return mixed
    */
   public function getFile($name, $default = null) {
     if(isset($_FILES[$name])) {
@@ -107,6 +151,12 @@ class Request {
 
   /**
    * アップロードされた画像の拡張子を返す
+   * 
+   * 画像アップロード用に追加 (なぞログ)
+   * jpegかpngのみ対応
+   * 
+   * @param string $filename
+   * @return string|null
    */
   public function getImageType($filename) {
     switch (exif_imagetype($filename)) {
