@@ -1,17 +1,29 @@
 <?php
 
+/**
+ * ルーティング管理クラス Router
+ */
 class Router {
   protected $routes;
 
   /**
-   * ルーティング定義配列を受け取り、Router->compileRoutesを呼び出すコンストラクタ
+   * コンストラクタ
+   * 
+   * ルーティング定義配列を受け取り、Router::compileRoutes()を呼び出す
+   * 
+   * @param array $definitions
    */
   public function __construct($definitions) {
     $this->routes = $this->compileRoutes($definitions);
   }
 
   /**
-   * ルーティング定義配列を受け取り、動的パラメータを正規表現で扱える形式に変換し、返す
+   * ルーティング定義配列を変換するメソッド
+   * 
+   * ルーティング定義配列を動的パラメータを正規表現で扱える形式に変換する
+   * 
+   * @param array $definitions
+   * @return array $routes
    */
   public function compileRoutes($definitions) {
     $routes = array();
@@ -32,10 +44,15 @@ class Router {
   }
 
   /**
+   * 指定されたPATH_INFOからルーティングを行うメソッド
+   * 
    * PATH_INFOを受け取り、ルーティング定義配列とマッチングを行う
    * マッチした場合はコントローラーとアクションが格納された$paramsと
    * マッチしたルートが格納された$matchesをマージし、その配列を返す
    * マッチしなかった場合はfalseを返す
+   * 
+   * @param string $path_info
+   * @return array|false
    */
   public function resolve($path_info) {
     if ('/' !== substr($path_info, 0, 1)) {
