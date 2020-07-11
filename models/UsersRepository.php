@@ -1,10 +1,19 @@
 <?php
 
+/**
+ * ユーザーテーブルの管理クラス UserRepository
+ */
 class UsersRepository extends DbRepository {
   /**
-   * クライアントが入力したユーザー名、メールアドレス、パスワードを受け取り、
-   * パスワードをハッシュ化した後にDBにINSERT文を実行する
-   * (何故$stmtに代入しているかは不明…)
+   * DBへINSERT文を実行する
+   * 
+   * ユーザー名、メールアドレス、パスワード、イメージ名を受け取り、
+   * パスワードをハッシュ化した後にDBへINSERTする
+   * 
+   * @param string $user_name
+   * @param string $email
+   * @param string $password
+   * @param string $image_name
    */
   public function insert($user_name, $email, $password, $image_name) {
     $password = $this->hashPassword($password);
@@ -21,14 +30,20 @@ class UsersRepository extends DbRepository {
   }
 
   /**
-   * クライアントが入力したパスワードを受け取り、ハッシュ化する
+   * パスワードをハッシュ化するメソッド
+   * 
+   * @param string $password
+   * @return string
    */
   public function hashPassword($password) {
     return sha1($password . 'SecretKey');
   }
 
   /**
-   * クライアントが入力したユーザー名を受け取り、DBにSELECT文を実行、結果を返す
+   * ユーザー名を受け取り、DBにSELECT文を実行、結果を返すメソッド
+   * 
+   * @param string $user_name
+   * @return array
    */
   public function fetchByUserName($user_name) {
     $sql = "SELECT * FROM users WHERE name = :user_name";
@@ -36,7 +51,10 @@ class UsersRepository extends DbRepository {
   }
   
   /**
-   * URLの動的パラメータ:idを受け取り、DBにSELECT文を実行、結果を返す
+   * 動的パラメータ:idを受け取り、DBにSELECT文を実行、結果を返すメソッド
+   * 
+   * @param int $id
+   * @return array
    */
   public function fetchByUserId($id) {
     $sql = "SELECT * FROM users WHERE id = :id";
@@ -44,7 +62,10 @@ class UsersRepository extends DbRepository {
   }
 
   /**
-   * クライアントが入力したメールアドレスを受け取り、DBにSELECT文を実行、結果を返す
+   * メールアドレスを受け取り、DBにSELECT文を実行、結果を返すメソッド
+   * 
+   * @param string $email
+   * @return array
    */
   public function fetchByEmail($email) {
     $sql = "SELECT * FROM users WHERE email = :email";
@@ -52,9 +73,13 @@ class UsersRepository extends DbRepository {
   }
 
   /**
-   * クライアントが入力したユーザー名を受け取り、
-   * DBにセレクト文を実行、同じユーザー名のidが0ならばtrue、それ以外ならばfalseを返す
-   * (MySQLなら文字列で、pgsqlなら整数型で返ってくるようなので型を含めない比較にした)
+   * ユーザー名がユニークか調べるメソッド
+   * 
+   * ユーザー名を受け取り、DBに SELECT文を実行、
+   * 同じユーザー名のidが0ならばtrue、それ以外ならばfalseを返す
+   * 
+   * @param string $user_name
+   * @return boolean
    */
   public function isUniqueUserName($user_name) {
     $sql = "SELECT COUNT (id) as count FROM users WHERE name = :user_name";
@@ -68,9 +93,13 @@ class UsersRepository extends DbRepository {
   }
 
   /**
-   * クライアントが入力したメールアドレスを受け取り、
-   * DBにセレクト文を実行、同じメールアドレスのidが0ならばtrue、それ以外ならばfalseを返す
-   * (MySQLなら文字列で、pgsqlなら整数型で返ってくるようなので型を含めない比較にした)
+   * メールアドレスがユニークか調べるメソッド
+   * 
+   * メールアドレスを受け取り、DBにSELECT文を実行、
+   * 同じメールアドレスのidが0ならばtrue、それ以外ならばfalseを返す
+   * 
+   * @param string $email
+   * @return boolean
    */
   public function isUniqueMailAddress($email) {
     $sql = "SELECT COUNT (id) as count FROM users WHERE email = :email";
@@ -84,7 +113,10 @@ class UsersRepository extends DbRepository {
   }
 
   /**
-   * ユーザーIDを受け取ってフォローしているユーザーの情報を受け取る
+   * ユーザーIDを受け取ってフォローしているユーザーの情報を受け取るメソッド
+   * 
+   * @param string $user_id
+   * @return array
    */
   public function fetchAllFollowingsByUserId($user_id) {
     $sql = "SELECT users.* FROM users LEFT JOIN followings ON followings.following_id = users.id WHERE followings.user_id = :user_id ORDER BY followings.following_at DESC";
@@ -92,7 +124,10 @@ class UsersRepository extends DbRepository {
   }
   
   /**
-   * ユーザーIDを受け取ってフォローされているユーザーの情報を受け取る
+   * ユーザーIDを受け取ってフォローされているユーザーの情報を受け取るメソッド
+   * 
+   * @param string $user_id
+   * @return array
    */
   public function fetchAllFollowersByUserId($user_id) {
     $sql = "SELECT users.* FROM users LEFT JOIN followings ON followings.user_id = users.id WHERE followings.following_id = :user_id ORDER BY followings.following_at DESC";
@@ -100,8 +135,11 @@ class UsersRepository extends DbRepository {
   }
 
   /**
-   * ユーザーID、ユーザー名、ファイルを受け取り、DBにupdate文を実行する
-   * (メールアドレスは変更させない)
+   * ユーザーID、ユーザー名、ファイルを受け取り、DBにupdate文を実行するメソッド
+   * 
+   * @param string $user_id
+   * @param string $user_name
+   * @param string $image_name
    */
   public function update($user_id, $user_name, $image_name) {
     $now = new DateTime();
