@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ユーザーテーブルの管理クラス UserRepository
+ * Usersテーブルの管理クラス UserRepository
  */
 class UsersRepository extends DbRepository {
   /**
