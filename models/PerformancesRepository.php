@@ -1,8 +1,13 @@
 <?php
 
+/**
+ * Performancesテーブルの管理クラス PerformancesRepository
+ */
 class PerformancesRepository extends DbRepository {
   /**
-   * Performancesテーブルから全て抽出して返す
+   * Performancesテーブルから全て抽出して返すメソッド
+   * 
+   * @return array
    */
   public function fetchAllPerformances() {
     $sql = "SELECT * FROM performances";
@@ -10,7 +15,10 @@ class PerformancesRepository extends DbRepository {
   }
 
   /**
-   * 公演IDを受け取り、DBから一致する公演情報を受け取る
+   * 公演IDを受け取り、DBから一致する公演情報を受け取るメソッド
+   * 
+   * @param int $performance_id
+   * @return array
    */
   public function fetchByPerformanceId($performance_id) {
     $sql = "SELECT performances.* FROM performances LEFT JOIN posts ON performances.id = posts.performance_id WHERE performances.id = :performance_id";
@@ -21,7 +29,10 @@ class PerformancesRepository extends DbRepository {
   }
 
   /**
-   * ユーザーIDを受け取り、そのユーザーが「行った」した公演情報を返す
+   * ユーザーIDを受け取り、そのユーザーが「行った」した公演情報を返すメソッド
+   * 
+   * @param int $user_id
+   * @return array
    */
   public function fetchAllDonesByUserId($user_id) {
     $sql = "SELECT performances.* FROM performances LEFT JOIN dones ON performances.id = dones.performance_id WHERE user_id = :user_id";
@@ -31,7 +42,10 @@ class PerformancesRepository extends DbRepository {
   }
 
   /**
-   * ユーザーIDを受け取り、そのユーザーが「行きたい」した公演情報を返す
+   * ユーザーIDを受け取り、そのユーザーが「行きたい」した公演情報を返すメソッド
+   * 
+   * @param int $user_id
+   * @return array
    */
   public function fetchAllWannasByUserId($user_id) {
     $sql = "SELECT performances.* FROM performances LEFT JOIN wannas ON performances.id = wannas.performance_id WHERE user_id = :user_id";
