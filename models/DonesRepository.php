@@ -1,8 +1,14 @@
 <?php
 
+/**
+ * Donesテーブル管理クラス DonesRepository
+ */
 class DonesRepository extends DbRepository {
   /**
-   * ユーザーIDと公演IDを受け取り、DBにinsert文を実行する
+   * 行きたい！にするメソッド
+   * 
+   * @param int $user_id
+   * @param int $performance_id
    */
   public function insert($user_id, $performance_id) {
     $now = new DateTime();
@@ -15,7 +21,10 @@ class DonesRepository extends DbRepository {
   }
 
   /**
-   * ユーザーIDと公演IDを受け取り、DBにdelete文を実行する
+   * 行きたい！を取り消すメソッド
+   * 
+   * @param $user_id
+   * @param $performance_id
    */
   public function delete($user_id, $performance_id) {
     $sql = "DELETE FROM dones WHERE user_id = :user_id AND performance_id = :performance_id";
@@ -26,7 +35,11 @@ class DonesRepository extends DbRepository {
   }
 
   /**
-   * ユーザーIDと公演IDを受け取り、Doneしているか否か返す
+   * 行きたい！の判定用メソッド
+   * 
+   * @param int $user_id
+   * @param int $performance_id
+   * @return boolean
    */
   public function isDone($user_id, $performance_id) {
     $sql = "SELECT COUNT(user_id) as count FROM dones WHERE user_id = :user_id AND performance_id = :performance_id";
