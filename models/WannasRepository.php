@@ -1,8 +1,12 @@
 <?php
 
+/** Wannasテーブルの管理クラス WannasRepository */
 class WannasRepository extends DbRepository {
   /**
-   * ユーザーIDと公演IDを受け取り、DBにinsert文を実行する
+   * 行きたい！にするメソッド
+   * 
+   * @param int $user_id
+   * @param int $performance_id
    */
   public function insert($user_id, $performance_id) {
     $now = new DateTime();
@@ -15,7 +19,10 @@ class WannasRepository extends DbRepository {
   }
 
   /**
-   * ユーザーIDと公演IDを受け取り、DBにdelete文を実行する
+   * 行きたい！を取り消すメソッド
+   * 
+   * @param $user_id
+   * @param $performance_id
    */
   public function delete($user_id, $performance_id) {
     $sql = "DELETE FROM wannas WHERE user_id = :user_id AND performance_id = :performance_id";
@@ -24,9 +31,13 @@ class WannasRepository extends DbRepository {
       'performance_id' => $performance_id
     ));
   }
-
+  
   /**
-   * ユーザーIDと公演IDを受け取り、Doneしているか否か返す
+   * 行きたい！の判定用メソッド
+   * 
+   * @param int $user_id
+   * @param int $performance_id
+   * @return boolean
    */
   public function isWanna($user_id, $performance_id) {
     $sql = "SELECT COUNT(user_id) as count FROM wannas WHERE user_id = :user_id AND performance_id = :performance_id";

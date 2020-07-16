@@ -5,7 +5,7 @@
  */
 class DonesRepository extends DbRepository {
   /**
-   * 行きたい！にするメソッド
+   * 行った！にするメソッド
    * 
    * @param int $user_id
    * @param int $performance_id
@@ -21,7 +21,7 @@ class DonesRepository extends DbRepository {
   }
 
   /**
-   * 行きたい！を取り消すメソッド
+   * 行った！を取り消すメソッド
    * 
    * @param $user_id
    * @param $performance_id
@@ -35,7 +35,7 @@ class DonesRepository extends DbRepository {
   }
 
   /**
-   * 行きたい！の判定用メソッド
+   * 行った！の判定用メソッド
    * 
    * @param int $user_id
    * @param int $performance_id
