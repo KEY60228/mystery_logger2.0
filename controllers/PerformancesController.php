@@ -1,11 +1,16 @@
 <?php
 
+/**
+ * 公演関係のコントローラー PerformanceController
+ */
 class PerformancesController extends Controller {
   // ログインが必要なアクションを指定する
   protected $auth_actions = array('show', 'done', 'undone', 'interested', 'disinterested');
 
   /**
-   * 公演一覧ページを表示する
+   * 公演一覧ページを表示するメソッド
+   * 
+   * @return string
    */
   public function indexAction() {
     $performances = $this->db_manager->get('Performances')->fetchAllPerformances();
@@ -16,7 +21,10 @@ class PerformancesController extends Controller {
   }
 
   /**
-   * URLから公演IDを受け取り、公演詳細ページを表示する
+   * URLから公演IDを受け取り、公演詳細ページを表示するメソッド
+   * 
+   * @param array $params
+   * @return string
    */
   public function showAction($params) {
     $performance = $this->db_manager->get('Performances')->fetchByPerformanceId($params['id']);
@@ -41,6 +49,8 @@ class PerformancesController extends Controller {
 
   /**
    * 公演を「行った！」にするアクション
+   * 
+   * @throws HttpNotFoundException | @return void
    */
   public function doneAction() {
     if (!$this->request->isPost()) {
@@ -73,6 +83,8 @@ class PerformancesController extends Controller {
 
   /**
    * 公演の「行った！」を取り消すアクション
+   * 
+   * @throws HttpNotFoundException | @return void
    */
   public function undoneAction() {
     if (!$this->request->isPost()) {
@@ -105,6 +117,8 @@ class PerformancesController extends Controller {
 
   /**
    * 公演を「行きたい！」にするアクション
+   * 
+   * @throws HttpNotFoundException | @return void
    */
   public function interestedAction() {
     if (!$this->request->isPost()) {
@@ -137,6 +151,8 @@ class PerformancesController extends Controller {
 
   /**
    * 公演の「行きたい！」を取り消すアクション
+   * 
+   * @throws HttpNotFoundException | @return void
    */
   public function disinterestedAction() {
     if (!$this->request->isPost()) {
