@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * 投稿関係のコントローラー PostsController
+ */
 class PostsController extends Controller {
   // ログインが必要なアクションを指定する
   protected $auth_actions = array('new', 'create', 'show', 'index');
@@ -7,8 +10,11 @@ class PostsController extends Controller {
   protected $right_actions = array('edit', 'update', 'destroy');
 
   /**
-   * 新規投稿ページを返す
+   * 新規投稿ページを返すメソッド
+   * 
    * 新規投稿ページには前回記入したcontentsとtokenを渡す
+   * 
+   * @return string
    */
   public function newAction() {
     $performances = $this->db_manager->get('Performances')->fetchAllPerformances();
@@ -20,10 +26,13 @@ class PostsController extends Controller {
   }
 
   /**
-   * 投稿アクション
+   * 投稿するメソッド
+   * 
    * HTTPメソッドがPost以外の場合は404ページに遷移させ、トークンの照合が不正な場合はリダイレクトする
    * 投稿に問題なければinsert文を実行しユーザー詳細ページにリダイレクトし、
    * 問題がある場合は各データを渡して再度表示させる (リダイレクトではない)
+   * 
+   * @throws HttpNotFoundException | @return void|string
    */
   public function createAction() {
     if (!$this->request->isPost()) {
@@ -67,8 +76,13 @@ class PostsController extends Controller {
   }
 
   /**
+   * 投稿詳細ページを表示させるメソッド
+   * 
    * ルーティングでマッチした配列を受け取り、投稿が存在するか確認した後、詳細ページを表示する
    * 投稿が存在しなかった場合は404ページに遷移させる
+   * 
+   * @param array $paramas
+   * @return string
    */
   public function showAction($params) {
     $post = $this->db_manager->get('Posts')->fetchById($params['id']);
@@ -86,7 +100,12 @@ class PostsController extends Controller {
   }
   
   /**
+   * 投稿編集ページの表示メソッド
+   * 
    * URLから動的パラメータを受け取り、投稿の編集ページを表示させる
+   * 
+   * @param array $params
+   * @throws HttpNotFoundException | @return string
    */
   public function editAction($params) {
     $post = $this->db_manager->get('Posts')->fetchById($params['id']);
@@ -108,10 +127,15 @@ class PostsController extends Controller {
   }
 
   /**
+   * 投稿のアップデートメソッド
+   * 
    * URLから動的パラメータを受け取る
    * HTTPメソッドがPOSTでなければ404に遷移させ、トークンが不正ならリダイレクトさせる
    * 投稿チェックを行い、エラーがなければupdate文を実行し、投稿詳細ページにリダイレクトさせる
    * エラーがある場合は編集ページを再度表示させる (リダイレクトではない)
+   * 
+   * @param array $params
+   * @throws HttpNotFoundException | @return void|string
    */
   public function updateAction($params) {
     if (!$this->request->isPost()) {
@@ -149,8 +173,13 @@ class PostsController extends Controller {
   }
 
   /**
+   * 投稿削除メソッド
+   * 
    * URLから投稿情報を受け取り、該当のIDの投稿を削除するアクション
    * 削除が完了したらユーザー詳細ページにリダイレクトする
+   * 
+   * @param array $params
+   * @return void
    */
   public function destroyAction($params) {
 
@@ -173,8 +202,12 @@ class PostsController extends Controller {
   }
 
   /**
+   * タイムラインの表示メソッド
+   * 
    * タイムラインを表示させる
    * (自分の投稿とフォローしているユーザーの投稿全て表示)
+   * 
+   * @return string
    */
   public function indexAction() {
     $user = $this->session->get('user');
